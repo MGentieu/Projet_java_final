@@ -193,6 +193,7 @@ public class Menu implements ActionListener {
                 philo.add(L5);
                 philo.add(L6);*/
                 this.create_panneau("Projet_Java/policier.jpg", philo);
+                conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
