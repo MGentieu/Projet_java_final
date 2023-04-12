@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public class MonPanel_2 extends JPanel {
+public class MonPanel extends JPanel {
 
     int x=1,y=3;
     int compteur=0;
@@ -17,7 +17,7 @@ public class MonPanel_2 extends JPanel {
     JLabel quantite;
 
 
-    public MonPanel_2(ArrayList<Livre> livres)
+    public MonPanel(ArrayList<Livre> livres)
     {
          int taille=livres.size();
         int y=1;

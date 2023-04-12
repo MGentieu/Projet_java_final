@@ -1,5 +1,5 @@
 package vue;
-import PackageLivre.MonPanel_2;
+import PackageLivre.MonPanel;
 import PackagePanier.Panier;
 import PackagePanier.PanierClient;
 import modele.*;
@@ -179,109 +179,71 @@ public class Menu implements ActionListener {
             try {
                 // recupération des livre dans la BDD
                 Connexion conn = new Connexion("ece_shopping_4","root","");
-                /*Livre L1 = new Livre("AAAA", "", "Projet_Java/categorie.png", 6, "JC", "Moi", "AAAAAAAAAAAA", 12.33);
-                Livre L2 = new Livre("BBBB", "", "Projet_Java/categorie.png", 3, "AH", "TOI", "AAAAAAAAAAAA", 12.33);
-                Livre L3 = new Livre("CCCCC", "", "Projet_Java/categorie.png", 1, "EJ", "LUI", "AAAAAAAAAAAA", 12.33);
-                Livre L4 = new Livre("EEEEE", "", "Projet_Java/categorie.png", 7, "HF", "poi", "AAAAAAAAAAAA", 12.33);
-                Livre L5 = new Livre("EEEEE", "", "Projet_Java/categorie.png", 7, "HF", "poi", "AAAAAAAAAAAA", 12.33);
-                Livre L6 = new Livre("EEEEE", "", "Projet_Java/categorie.png", 7, "HF", "poi", "AAAAAAAAAAAA", 12.33);*/
-                ArrayList<Livre> philo = conn.recherche_par_categorie("Policier");
-                /*philo.add(L1);
-                philo.add(L2);
-                philo.add(L3);
-                philo.add(L4);
-                philo.add(L5);
-                philo.add(L6);*/
-                this.create_panneau("Projet_Java/policier.jpg", philo);
+                ArrayList<Livre> policiers = conn.recherche_par_categorie("Policier");
+                this.create_panneau("Projet_Java/policier.jpg", policiers);
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
 
         } else if (ev.getSource() == C2) {
-            // recupération des livre dans la BDD
-            Livre L1 =new Livre("AAAA","","Projet_Java/categorie.png",6,"JC","Moi","AAAAAAAAAAAA",12.33);
-            Livre L2 =new Livre("BBBB","","Projet_Java/categorie.png",3,"AH","TOI","AAAAAAAAAAAA",12.33);
-            Livre L3 =new Livre("CCCCC","","Projet_Java/categorie.png",1,"EJ","LUI","AAAAAAAAAAAA",12.33);
-            Livre L4=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L5=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L6=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            ArrayList<Livre> philo=new ArrayList<Livre>();
-            philo.add(L1);
-            philo.add(L2);
-            philo.add(L3);
-            philo.add(L4);
-            philo.add(L5);
-            philo.add(L6);
-            this.create_panneau("Projet_Java/fantastique.png", philo);
+            try {
+                // recupération des livre dans la BDD
+                Connexion conn = new Connexion("ece_shopping_4","root","");
+                ArrayList<Livre> sciencef = conn.recherche_par_categorie("Science-Fiction");
+                this.create_panneau("Projet_Java/policier.jpg", sciencef);
+                conn.close();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         else if (ev.getSource() == C3) {
             // recupération des livre dans la BDD
-            Livre L1 =new Livre("AAAA","","Projet_Java/categorie.png",6,"JC","Moi","AAAAAAAAAAAA",12.33);
-            Livre L2 =new Livre("BBBB","","Projet_Java/categorie.png",3,"AH","TOI","AAAAAAAAAAAA",12.33);
-            Livre L3 =new Livre("CCCCC","","Projet_Java/categorie.png",1,"EJ","LUI","AAAAAAAAAAAA",12.33);
-            Livre L4=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L5=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L6=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            ArrayList<Livre> philo=new ArrayList<Livre>();
-            philo.add(L1);
-            philo.add(L2);
-            philo.add(L3);
-            philo.add(L4);
-            philo.add(L5);
-            philo.add(L6);
-            this.create_panneau("Projet_Java/romantique.png", philo);
+            try {
+                // recupération des livre dans la BDD
+                Connexion conn = new Connexion("ece_shopping_4","root","");
+                ArrayList<Livre> romantiques = conn.recherche_par_categorie("Romantique");
+                this.create_panneau("Projet_Java/policier.jpg", romantiques);
+                conn.close();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         else if (ev.getSource() == C4) {
             // recupération des livre dans la BDD
-            Livre L1 =new Livre("AAAA","","Projet_Java/categorie.png",6,"JC","Moi","AAAAAAAAAAAA",12.33);
-            Livre L2 =new Livre("BBBB","","Projet_Java/categorie.png",3,"AH","TOI","AAAAAAAAAAAA",12.33);
-            Livre L3 =new Livre("CCCCC","","Projet_Java/categorie.png",1,"EJ","LUI","AAAAAAAAAAAA",12.33);
-            Livre L4=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L5=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L6=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            ArrayList<Livre> philo=new ArrayList<Livre>();
-            philo.add(L1);
-            philo.add(L2);
-            philo.add(L3);
-            philo.add(L4);
-            philo.add(L5);
-            philo.add(L6);
-            this.create_panneau("Projet_Java/theatrale.png", philo);
+            try {
+                // recupération des livre dans la BDD
+                Connexion conn = new Connexion("ece_shopping_4","root","");
+                ArrayList<Livre> theatrales = conn.recherche_par_categorie("Theatrale");
+                this.create_panneau("Projet_Java/policier.jpg", theatrales);
+                conn.close();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         else if (ev.getSource() == C5) {
             // recupération des livre dans la BDD
-            Livre L1 =new Livre("AAAA","","Projet_Java/categorie.png",6,"JC","Moi","AAAAAAAAAAAA",12.33);
-            Livre L2 =new Livre("BBBB","","Projet_Java/categorie.png",3,"AH","TOI","AAAAAAAAAAAA",12.33);
-            Livre L3 =new Livre("CCCCC","","Projet_Java/categorie.png",1,"EJ","LUI","AAAAAAAAAAAA",12.33);
-            Livre L4=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L5=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L6=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            ArrayList<Livre> philo= new ArrayList<Livre>();
-            philo.add(L1);
-            philo.add(L2);
-            philo.add(L3);
-            philo.add(L4);
-            philo.add(L5);
-            philo.add(L6);
-            this.create_panneau("Projet_Java/aventure.jpg", philo);
+            try {
+                // recupération des livre dans la BDD
+                Connexion conn = new Connexion("ece_shopping_4","root","");
+                ArrayList<Livre> aventures = conn.recherche_par_categorie("Aventure");
+                this.create_panneau("Projet_Java/policier.jpg", aventures);
+                conn.close();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         else if (ev.getSource() == C6) {
             // recupération des livre dans la BDD
-            Livre L1 =new Livre("AAAA","","Projet_Java/categorie.png",6,"JC","Moi","AAAAAAAAAAAA",12.33);
-            Livre L2 =new Livre("BBBB","","Projet_Java/categorie.png",3,"AH","TOI","AAAAAAAAAAAA",12.33);
-            Livre L3 =new Livre("CCCCC","","Projet_Java/categorie.png",1,"EJ","LUI","AAAAAAAAAAAA",12.33);
-            Livre L4=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L5=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L6=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            ArrayList<Livre> philo=new ArrayList<Livre>();
-            philo.add(L1);
-            philo.add(L2);
-            philo.add(L3);
-            philo.add(L4);
-            philo.add(L5);
-            philo.add(L6);
-            this.create_panneau("Projet_Java/philosophique.jpg", philo);
+            try {
+                // recupération des livre dans la BDD
+                Connexion conn = new Connexion("ece_shopping_4","root","");
+                ArrayList<Livre> philo = conn.recherche_par_categorie("Philosophique");
+                this.create_panneau("Projet_Java/policier.jpg", philo);
+                conn.close();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         else if (ev.getSource() == P1 ) {
             Livre L1 =new Livre("AAAA","","Projet_Java\\categorie.png",5,"EJ","LUI","AAAAAAAAAAAA",10.99);
@@ -347,7 +309,7 @@ public class Menu implements ActionListener {
         // Définition de la taille du JPanel
         panel.setPreferredSize(size);
 
-        MonPanel_2 p = new MonPanel_2(livres);
+        MonPanel p = new MonPanel(livres);
         panel.add(p, BorderLayout.CENTER);
 
         frame.getContentPane().removeAll();
