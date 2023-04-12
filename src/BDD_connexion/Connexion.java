@@ -195,7 +195,7 @@ public class Connexion {
         }
     }
 
-    public ArrayList remplirChampsRequete_categorie(String requete) throws SQLException {
+    public ArrayList remplirChampsRequete(String requete) throws SQLException {
         // récupération de l'ordre de la requete
         rset = stmt.executeQuery(requete);
 
@@ -225,6 +225,11 @@ public class Connexion {
 
         // Retourner l'ArrayList
         return liste;
+    }
+
+    public ArrayList recherche_par_categorie(String categorie) throws SQLException{
+        String requete = "SELECT * FROM livre WHERE categorie = '"+categorie+"';";
+        return remplirChampsRequete(requete);
     }
 }
 

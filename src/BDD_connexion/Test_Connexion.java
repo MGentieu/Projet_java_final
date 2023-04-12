@@ -20,7 +20,7 @@ public class Test_Connexion {
             }
             System.out.println("\n\n");*/
 
-            ArrayList<Livre> liste = connexion.remplirChampsRequete_categorie(requete);
+            ArrayList<Livre> liste = connexion.recherche_par_categorie("Policier");
             for(int i = 0;i<liste.size();i++){
                 System.out.println(liste.get(i).toString());
             }

@@ -7,6 +7,7 @@ import modele.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -17,6 +18,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import BDD_connexion.Connexion;
 
 
 public class Menu implements ActionListener {
@@ -174,21 +176,27 @@ public class Menu implements ActionListener {
 
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == C1) {
-            // recupération des livre dans la BDD
-            Livre L1 = new Livre("AAAA","","Projet_Java/categorie.png",6,"JC","Moi","AAAAAAAAAAAA",12.33);
-            Livre L2 = new Livre("BBBB","","Projet_Java/categorie.png",3,"AH","TOI","AAAAAAAAAAAA",12.33);
-            Livre L3 = new Livre("CCCCC","","Projet_Java/categorie.png",1,"EJ","LUI","AAAAAAAAAAAA",12.33);
-            Livre L4 = new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L5 = new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            Livre L6 = new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            ArrayList<Livre> philo=new ArrayList<Livre>();
-            philo.add(L1);
-            philo.add(L2);
-            philo.add(L3);
-            philo.add(L4);
-            philo.add(L5);
-            philo.add(L6);
-            this.create_panneau("Projet_Java/policier.jpg", philo);
+            try {
+                // recupération des livre dans la BDD
+                Connexion conn = new Connexion("ece_shopping_4","root","");
+                /*Livre L1 = new Livre("AAAA", "", "Projet_Java/categorie.png", 6, "JC", "Moi", "AAAAAAAAAAAA", 12.33);
+                Livre L2 = new Livre("BBBB", "", "Projet_Java/categorie.png", 3, "AH", "TOI", "AAAAAAAAAAAA", 12.33);
+                Livre L3 = new Livre("CCCCC", "", "Projet_Java/categorie.png", 1, "EJ", "LUI", "AAAAAAAAAAAA", 12.33);
+                Livre L4 = new Livre("EEEEE", "", "Projet_Java/categorie.png", 7, "HF", "poi", "AAAAAAAAAAAA", 12.33);
+                Livre L5 = new Livre("EEEEE", "", "Projet_Java/categorie.png", 7, "HF", "poi", "AAAAAAAAAAAA", 12.33);
+                Livre L6 = new Livre("EEEEE", "", "Projet_Java/categorie.png", 7, "HF", "poi", "AAAAAAAAAAAA", 12.33);*/
+                ArrayList<Livre> philo = conn.recherche_par_categorie("Policier");
+                /*philo.add(L1);
+                philo.add(L2);
+                philo.add(L3);
+                philo.add(L4);
+                philo.add(L5);
+                philo.add(L6);*/
+                this.create_panneau("Projet_Java/policier.jpg", philo);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
         } else if (ev.getSource() == C2) {
             // recupération des livre dans la BDD
             Livre L1 =new Livre("AAAA","","Projet_Java/categorie.png",6,"JC","Moi","AAAAAAAAAAAA",12.33);
@@ -248,7 +256,7 @@ public class Menu implements ActionListener {
             Livre L4=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
             Livre L5=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
             Livre L6=new Livre("EEEEE","","Projet_Java/categorie.png",7,"HF","poi","AAAAAAAAAAAA",12.33);
-            ArrayList<Livre> philo=new ArrayList<Livre>();
+            ArrayList<Livre> philo= new ArrayList<Livre>();
             philo.add(L1);
             philo.add(L2);
             philo.add(L3);
