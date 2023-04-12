@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Test_Connexion {
     public static void main(String [] args){
-        //ArrayList<Livre> liste = new ArrayList<Livre>();
+        ArrayList<Livre> liste = new ArrayList<Livre>();
         try {
             // Création d'une nouvelle connexion à la base de données
             Connexion connexion = new Connexion("ece_shopping_3", "root", "");
