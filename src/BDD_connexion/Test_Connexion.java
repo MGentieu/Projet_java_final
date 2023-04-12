@@ -19,7 +19,7 @@ public class Test_Connexion {
                 System.out.println(resultats.get(i));
             }
 
-            // Fermeture de la connexion
+            connexion.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
