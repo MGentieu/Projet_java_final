@@ -1,23 +1,31 @@
 package BDD_connexion;
 
-import modele.*;
+import modele.Livre;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Test_Connexion {
     public static void main(String [] args){
-        ArrayList<Livre> liste = new ArrayList<Livre>();
+
         try {
             // Création d'une nouvelle connexion à la base de données
-            Connexion connexion = new Connexion("ece_shopping_3", "root", "");
+            Connexion connexion = new Connexion("ece_shopping_4", "root", "");
             String requete = "SELECT * FROM livre WHERE categorie = 'policier';";
-            ArrayList<String> resultats = connexion.remplirChampsRequete(requete);
+            /*ArrayList<String> resultats = connexion.remplirChampsRequete(requete);
             // Utilisation de la connexion pour exécuter des requêtes, mettre à jour la base de données, etc.
 
             System.out.println("Livres policiers : ");
             for(int i =0;i<resultats.size();i++){
                 System.out.println(resultats.get(i));
             }
+            System.out.println("\n\n");*/
+
+            ArrayList<Livre> liste = connexion.remplirChampsRequete_categorie(requete);
+            for(int i = 0;i<liste.size();i++){
+                System.out.println(liste.get(i).toString());
+            }
+            System.out.println(liste.size());
+
 
             connexion.close();
 

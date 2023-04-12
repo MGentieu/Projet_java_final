@@ -11,6 +11,7 @@ package BDD_connexion;
  */
 import java.sql.*;
 import java.util.ArrayList;
+import modele.Livre;
 
 
 /**
@@ -135,7 +136,7 @@ public class Connexion {
      * @return
      * @throws java.sql.SQLException
      */
-    public ArrayList remplirChampsRequete(String requete) throws SQLException {
+    /*public ArrayList remplirChampsRequete(String requete) throws SQLException {
         // récupération de l'ordre de la requete
         rset = stmt.executeQuery(requete);
 
@@ -168,7 +169,7 @@ public class Connexion {
 
         // Retourner l'ArrayList
         return liste;
-    }
+    }*/
 
     /**
      * Méthode qui execute une requete de MAJ en parametre
@@ -194,5 +195,36 @@ public class Connexion {
         }
     }
 
+    public ArrayList remplirChampsRequete_categorie(String requete) throws SQLException {
+        // récupération de l'ordre de la requete
+        rset = stmt.executeQuery(requete);
+
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+
+        // calcul du nombre de colonnes du resultat
+        int nbColonne = rsetMeta.getColumnCount();
+
+        // creation d'une ArrayList de String
+        ArrayList<Livre> liste;
+        liste = new ArrayList<Livre>();
+
+        // tant qu'il reste une ligne
+        while (rset.next()) {
+            Livre l = new Livre();
+            liste.add(l);
+            l.setNom(rset.getString(2));
+            l.setDescrption(rset.getString(3));
+            l.setEditeur(rset.getString(5));
+            l.setAuteur(rset.getString(6));
+            l.setType(rset.getString(7));
+            l.setStock(Integer.parseInt(rset.getString(8)));
+            l.setPrix(Double.parseDouble(rset.getString(9)));
+
+        }
+
+        // Retourner l'ArrayList
+        return liste;
+    }
 }
 

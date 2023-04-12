@@ -11,7 +11,7 @@ public class DescriptionLivres {
     public  String NomLivre;
     public  int stockLivre;
     public DescriptionLivres(Livre monLivre){
-        texteLivre=monLivre.descrption;
+        texteLivre=monLivre.description;
         auteurLivre=monLivre.auteur;
         editeurLivre=monLivre.editeur;
         NomLivre=monLivre.nom;
