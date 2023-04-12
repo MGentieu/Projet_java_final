@@ -9,10 +9,12 @@ import java.awt.Menu;
 
 public class TestFenetre{
     public static void main(String[] args) {
-            //new Login();
-            MaFenetre Accueil = new MaFenetre();
-            Accueil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            Accueil.setResizable(false);
+
+        //new Login();
+
+        MaFenetre Accueil = new MaFenetre();
+        Accueil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Accueil.setResizable(false);
 
     }
 }
