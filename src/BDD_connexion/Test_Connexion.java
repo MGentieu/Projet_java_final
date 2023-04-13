@@ -57,6 +57,7 @@ public class Test_Connexion {
             e.printStackTrace();
         }
         if(liste.size()>=1){ //ON TESTE LA FONCTION DE RECHERCHE DU STOCK
+            System.out.println(liste.get(0).recherche_Livre_stock());
 
         }
     }

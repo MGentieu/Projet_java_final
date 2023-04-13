@@ -89,7 +89,8 @@ public class Livre {
         return (identifiant+"  "+nom+"  "+description+"  "+editeur+"  "+auteur+"  "+type+" en stock : "+stock+" coûtant : "+prix+"\n");
     }
 
-    public boolean recherche_Livre_stock(){
+    public int recherche_Livre_stock(){ //RETOURNE LA VALEUR STOCKEE DU LIVRE DANS LA BDD.
+                                        //RETOURNE -1 SI IL Y A UN PROBLEME.
         try{
             Connexion conn = new Connexion("ece_shopping_4","root","");
             String requete = "SELECT * FROM livre WHERE identifiant = '" + identifiant + "';";
@@ -103,22 +104,23 @@ public class Livre {
             int nbColonne = conn.getRsetMeta().getColumnCount();
             if(conn.getRset().next()){
                 stock_donnee = Integer.parseInt(conn.getRset().getString(8));
+
                 /*if(stock_donnee>=getStock()){
                     int stock_finale = stock_donnee - getStock();
                     requete ="UPDATE livre SET stock = "+stock_finale+" WHERE identifiant = "+getIdentifiant()+";";
                 }*/
                 conn.close();
-                return true;
+                return stock_donnee;
             }
             else{
                 System.out.println("Pas de problème de connexion, mais le livre n'a pas été trouvé !");
                 conn.close();
-                return false;
+                return -1;
             }
         }
         catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
     }
 
