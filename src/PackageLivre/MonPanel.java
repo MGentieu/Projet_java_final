@@ -33,13 +33,13 @@ public class MonPanel extends JPanel {
         for (int i=0;i<livres.size();i++)
         {
             JPanel cel=new JPanel();
-            ImageIcon L1 = new ImageIcon(livres.get(i).image);
+            ImageIcon L1 = new ImageIcon(livres.get(i).getImage());
             // Nom de l'article
             JLabel POL1=new JLabel(L1);
             POL1.setVerticalTextPosition(JLabel.BOTTOM);
             POL1.setHorizontalTextPosition(JLabel.CENTER);
             POL1.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-            POL1.setText(livres.get(i).nom);
+            POL1.setText(livres.get(i).getNom());
             POL1.setForeground(Color.BLACK);
             POL1.setBackground(Color.WHITE);
             POL1.setOpaque(true);
@@ -53,7 +53,7 @@ public class MonPanel extends JPanel {
              // Bouton description
              boutonDescription1 = new JButton("Voir +");
              // Texte Quantité
-             quantite = new JLabel("QUANTITE: "+livres.get(i).stock);
+             quantite = new JLabel("QUANTITE: "+livres.get(i).getStock());
              quantite.setForeground(Color.BLACK);
              quantite.setBackground(Color.WHITE);
              quantite.setOpaque(true);

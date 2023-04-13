@@ -1,8 +1,13 @@
 package vue;
+import BDD_connexion.Connexion;
+import modele.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class Login extends JFrame {
     private JLabel emailLabel, passwordLabel;
     private JTextField emailField;
@@ -48,8 +53,24 @@ public class Login extends JFrame {
         loginButton = new JButton("Connexion");
         loginButton.setFont(new Font("", Font.PLAIN, 18));
         loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ev) {
                 // Code pour la connexion
+                try {
+                    // recupération de l'utilisateur correspondant dans la BDD :
+                    Connexion conn = new Connexion("ece_shopping_4","root","");
+                    System.out.println(emailField.getText());
+                    System.out.println(passwordField.getSelectedText());
+                    Utilisateurs u = conn.recherche_login(emailField.getText(),passwordField.getSelectedText());
+                    if(u==null){
+                        System.out.println("Erreur de login.");
+                    }
+                    else{
+                        System.out.println("Connexion réussie !\n"+u.toString());
+                    }
+                    conn.close();
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
         panel.add(loginButton);
@@ -57,7 +78,7 @@ public class Login extends JFrame {
         registerButton = new JButton("Inscription");
         registerButton.setFont(new Font("", Font.PLAIN, 18));
         registerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ev) {
                 // Code pour l'inscription
                 create_sign_up();
             }

@@ -16,7 +16,10 @@ public class Utilisateurs {
     protected String motDePasse;
     protected boolean isAdmin = false;
 
-    public Utilisateurs(int ID, String nom, String prenom, String email, String dateNaiss, int age, int role, ArrayList<Livre> monPanier, String motDePasse, boolean isAdmin) {
+    public Utilisateurs(){
+        this.monPanier = new ArrayList<Livre>();
+    }
+    public Utilisateurs(int ID, String nom, String prenom, String email, String dateNaiss, int age, int role,String motDePasse, boolean isAdmin) {
         this.ID = ID;
         this.nom = nom;
         this.prenom = prenom;
@@ -24,7 +27,7 @@ public class Utilisateurs {
         this.dateNaiss = dateNaiss;
         this.age = age;
         this.role = role;
-        this.monPanier = monPanier;
+        this.monPanier = new ArrayList<Livre>();
         this.motDePasse = motDePasse;
         this.isAdmin = isAdmin;
     }
@@ -72,7 +75,7 @@ public class Utilisateurs {
     }
 
     public void setDateNaiss(String dateNaiss) {
-        dateNaiss = dateNaiss;
+        this.dateNaiss = dateNaiss;
     }
 
     public int getAge() {
@@ -115,5 +118,24 @@ public class Utilisateurs {
         isAdmin = admin;
     }
 
+    @Override
+    public String toString() {
+
+        return (prenom + " " + nom + ". Âge : " + age + " ans. Date de naissance : " + dateNaiss + ".\nemail : " + email + ". Mot de passe : " + motDePasse);
+
+    }
+
+    public void ajouterPanier(Livre l){
+        if(l.getStock()<=0){
+            System.out.println("Le livre n'est plus en stock !");
+        }
+        else{
+            monPanier.add(l);
+        }
+    }
+
+    public void viderPanier(){
+        monPanier.clear();
+    }
 
 }

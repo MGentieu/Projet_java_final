@@ -11,11 +11,11 @@ public class DescriptionLivres {
     public  String NomLivre;
     public  int stockLivre;
     public DescriptionLivres(Livre monLivre){
-        texteLivre=monLivre.description;
-        auteurLivre=monLivre.auteur;
-        editeurLivre=monLivre.editeur;
-        NomLivre=monLivre.nom;
-        stockLivre=monLivre.stock;
+        texteLivre=monLivre.getDescription();
+        auteurLivre=monLivre.getAuteur();
+        editeurLivre=monLivre.getEditeur();
+        NomLivre=monLivre.getNom();
+        stockLivre=monLivre.getStock();
 
         JFrame Pop_Pup=new JFrame();
         JOptionPane.showMessageDialog(Pop_Pup,"NOM:"+NomLivre+"\n\nAuteur: "+auteurLivre+

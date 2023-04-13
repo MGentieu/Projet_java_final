@@ -10,9 +10,9 @@ public class ArticlePanier {
 
     public ArticlePanier(Livre article)
     {
-        nom= article.nom;
-        prix= article.prix;
-        imageArt=article.image;
+        nom= article.getNom();
+        prix= article.getPrix();
+        imageArt=article.getImage();
         stock++;
     }
 }

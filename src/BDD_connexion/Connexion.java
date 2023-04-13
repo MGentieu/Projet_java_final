@@ -12,6 +12,7 @@ package BDD_connexion;
 import java.sql.*;
 import java.util.ArrayList;
 import modele.Livre;
+import modele.Utilisateurs;
 
 
 /**
@@ -62,6 +63,20 @@ public class Connexion {
 
         // création d'un ordre SQL (statement)
         stmt = conn.createStatement();
+    }
+
+    public  Statement getStmt(){
+        return stmt;
+    }
+    public ResultSet getRset(){return rset;}
+    public void setRset(ResultSet rset){
+        this.rset = rset;
+    }
+    public ResultSetMetaData getRsetMeta(){
+        return rsetMeta;
+    }
+    public void setRsetMeta(ResultSetMetaData rsetMeta){
+        this.rsetMeta = rsetMeta;
     }
 
 
@@ -130,46 +145,6 @@ public class Connexion {
         return liste;
     }
 
-    /**
-     * Methode qui retourne l'ArrayList des champs de la requete en parametre
-     * @param requete
-     * @return
-     * @throws java.sql.SQLException
-     */
-    /*public ArrayList remplirChampsRequete(String requete) throws SQLException {
-        // récupération de l'ordre de la requete
-        rset = stmt.executeQuery(requete);
-
-        // récupération du résultat de l'ordre
-        rsetMeta = rset.getMetaData();
-
-        // calcul du nombre de colonnes du resultat
-        int nbColonne = rsetMeta.getColumnCount();
-
-        // creation d'une ArrayList de String
-        ArrayList<String> liste;
-        liste = new ArrayList<>();
-
-        // tant qu'il reste une ligne
-        while (rset.next()) {
-            String champs;
-            champs = rset.getString(1); // ajouter premier champ
-
-            // Concatener les champs de la ligne separes par ,
-            for (int i = 1; i < nbColonne; i++) {
-                champs = champs + "," + rset.getString(i + 1);
-            }
-
-            // ajouter un "\n" à la ligne des champs
-            champs = champs + "\n";
-
-            // ajouter les champs de la ligne dans l'ArrayList
-            liste.add(champs);
-        }
-
-        // Retourner l'ArrayList
-        return liste;
-    }*/
 
     /**
      * Méthode qui execute une requete de MAJ en parametre
@@ -178,6 +153,30 @@ public class Connexion {
      */
     public void executeUpdate(String requeteMaj) throws SQLException {
         stmt.executeUpdate(requeteMaj);
+    }
+    public boolean recherche_Livre(Livre l) throws SQLException {
+        // récupération de l'ordre de la requete
+        String requete = "SELECT * FROM livre WHERE identifiant = '" + l.getIdentifiant() + "';";
+        rset = stmt.executeQuery(requete);
+
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+
+        // calcul du nombre de colonnes du resultat
+        int nbColonne = rsetMeta.getColumnCount();
+        if (rset.next()) {
+
+            return true;
+        } else {
+            System.out.println("Livre pas trouvé ! ");
+            return false;
+        }
+    }
+
+    public void executeUpdate_stock(Livre l){
+
+        String requete = "UPDATE livre SET stock WHERE identifiant = "+l.getIdentifiant()+";";
+
     }
     public void close() {
         try {
@@ -195,7 +194,7 @@ public class Connexion {
         }
     }
 
-    public ArrayList remplirChampsRequete(String requete) throws SQLException {
+    public ArrayList remplirChampsRequete_livres(String requete) throws SQLException {
         // récupération de l'ordre de la requete
         rset = stmt.executeQuery(requete);
 
@@ -213,8 +212,9 @@ public class Connexion {
         while (rset.next()) {
             Livre l = new Livre();
             liste.add(l);
+            l.setIdentifiant(Integer.parseInt(rset.getString(1)));
             l.setNom(rset.getString(2));
-            l.setDescrption(rset.getString(3));
+            l.setDescription(rset.getString(3));
             l.setEditeur(rset.getString(5));
             l.setAuteur(rset.getString(6));
             l.setType(rset.getString(7));
@@ -229,7 +229,86 @@ public class Connexion {
 
     public ArrayList recherche_par_categorie(String categorie) throws SQLException{
         String requete = "SELECT * FROM livre WHERE categorie = '"+categorie+"';";
-        return remplirChampsRequete(requete);
+        return remplirChampsRequete_livres(requete);
+    }
+    public ArrayList remplirChampsRequete_clients(String requete) throws SQLException {
+        // récupération de l'ordre de la requete
+        rset = stmt.executeQuery(requete);
+
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+
+        // calcul du nombre de colonnes du resultat
+        int nbColonne = rsetMeta.getColumnCount();
+
+        // creation d'une ArrayList de String
+        ArrayList<Utilisateurs> liste;
+        liste = new ArrayList<Utilisateurs>();
+
+        // tant qu'il reste une ligne
+        while (rset.next()) {
+            Utilisateurs u = new Utilisateurs();
+            liste.add(u);
+            u.setNom(rset.getString(2));
+            u.setPrenom(rset.getString(3));
+            u.setAge(Integer.parseInt(rset.getString(4)));
+            u.setDateNaiss((rset.getString(5)));
+            u.setEmail(rset.getString(6));
+            u.setMotDePasse(rset.getString(7));
+        }
+
+        // Retourner l'ArrayList
+        return liste;
+    }
+
+    public Utilisateurs recherche_login(String email, String mdp) throws SQLException{
+        Utilisateurs u = null;
+        String requete = "SELECT * FROM client WHERE (email = '"+email+"' AND mot_de_passe = '"+mdp+"');";
+        rset = stmt.executeQuery(requete);
+
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+
+        // calcul du nombre de colonnes du resultat
+        int nbColonne = rsetMeta.getColumnCount();
+        if(rset.next()){
+            u = new Utilisateurs();
+            u.setNom(rset.getString(2));
+            u.setPrenom(rset.getString(3));
+            u.setAge(Integer.parseInt(rset.getString(4)));
+            u.setDateNaiss((rset.getString(5)));
+            u.setEmail(email);
+            u.setMotDePasse(mdp);
+            u.setAdmin(false);
+            return u;
+        }
+        else{
+            requete = "SELECT * FROM employee WHERE email = '"+email+"' AND mot_de_passe = '"+mdp+"';";
+            rset = stmt.executeQuery(requete);
+
+            // récupération du résultat de l'ordre
+            rsetMeta = rset.getMetaData();
+
+            // calcul du nombre de colonnes du resultat
+            nbColonne = rsetMeta.getColumnCount();
+            if(rset.next()){
+                u = new Utilisateurs();
+                u.setNom(rset.getString(2));
+                u.setPrenom(rset.getString(3));
+                u.setAge(Integer.parseInt(rset.getString(4)));
+                u.setDateNaiss((rset.getString(5)));
+                u.setEmail(email);
+                u.setMotDePasse(mdp);
+                u.setAdmin(true);
+                return u;
+            }
+            else{
+                return null;
+            }
+        }
+
+
+
     }
 }
 

@@ -1,11 +1,15 @@
 package BDD_connexion;
 
 import modele.Livre;
+import modele.Utilisateurs;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Test_Connexion {
     public static void main(String [] args){
+
+        ArrayList<Livre> liste = new ArrayList<Livre>();
 
         try {
             // Création d'une nouvelle connexion à la base de données
@@ -20,17 +24,40 @@ public class Test_Connexion {
             }
             System.out.println("\n\n");*/
 
-            ArrayList<Livre> liste = connexion.recherche_par_categorie("Policier");
+            liste = connexion.recherche_par_categorie("Policier");
             for(int i = 0;i<liste.size();i++){
                 System.out.println(liste.get(i).toString());
             }
-            System.out.println(liste.size());
+            System.out.println(liste.size()+"\n\n");
+
+            String requete2 = "SELECT * FROM client";
+            ArrayList<Utilisateurs> users = connexion.remplirChampsRequete_clients(requete2);
+            for(int i = 0;i<users.size();i++){
+                System.out.println(users.get(i).toString());
+            }
+
+            System.out.println("\n\n");
+            Utilisateurs u1 = connexion.recherche_login("martin.gentieu@edu.ece.fr","martin02");
+            Utilisateurs u2 = connexion.recherche_login("maxime.ambroise@edu.ece.fr","maxime05");
+            if(u2!=null){
+                System.out.println(u2.toString()+ ". Il est admin : "+u2.isAdmin());
+            }
+            if(u1!=null){
+                System.out.println(u1.toString()+ ". Il est admin : "+u1.isAdmin());
+            }
+
+            System.out.println(u2.getMotDePasse()=="maxime05");
+            System.out.println(u2.getMotDePasse()+"\n\n");
+
 
 
             connexion.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+        if(liste.size()>=1){ //ON TESTE LA FONCTION DE RECHERCHE DU STOCK
+
         }
     }
 }

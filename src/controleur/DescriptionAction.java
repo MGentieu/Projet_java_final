@@ -13,19 +13,19 @@ public class DescriptionAction extends AbstractAction {
         super (Nom);
 
         //LivreAficher.auteur=monLivre.auteur;
-        LivreAficher.description=monLivre.description;
-        LivreAficher.auteur=monLivre.auteur;
-        LivreAficher.editeur=monLivre.editeur;
-        LivreAficher.nom=monLivre.nom;
-        LivreAficher.stock=monLivre.stock;
+        LivreAficher.setDescription(monLivre.getDescription());
+        LivreAficher.setAuteur(monLivre.getAuteur());
+        LivreAficher.setEditeur(monLivre.getEditeur());
+        LivreAficher.setNom(monLivre.getNom());
+        LivreAficher.setStock(monLivre.getStock());
 
 
     }
 
     public void actionPerformed(ActionEvent e) {
         JFrame Pop_Pup=new JFrame();
-        JOptionPane.showMessageDialog(Pop_Pup,"NOM:"+LivreAficher.nom+
-                "\n\nEditeur: "+LivreAficher.editeur+"\n\n Stock: "+LivreAficher.stock+"\n\nDescription: "+LivreAficher.description);
+        JOptionPane.showMessageDialog(Pop_Pup,"NOM:"+LivreAficher.getNom()+
+                "\n\nEditeur: "+LivreAficher.getEditeur()+"\n\n Stock: "+LivreAficher.getStock()+"\n\nDescription: "+LivreAficher.getDescription());
 
     }
 }
