@@ -1,7 +1,9 @@
 package modele;
 
+import BDD_connexion.Connexion;
 import modele.Livre;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Utilisateurs {
@@ -13,11 +15,13 @@ public class Utilisateurs {
     protected int age;
     protected int role;
     protected ArrayList<Livre> monPanier;
+    private ArrayList<Integer> l_nb_achats;
     protected String motDePasse;
     protected boolean isAdmin = false;
 
     public Utilisateurs(){
         this.monPanier = new ArrayList<Livre>();
+        this.l_nb_achats = new ArrayList<Integer>();
     }
     public Utilisateurs(int ID, String nom, String prenom, String email, String dateNaiss, int age, int role,String motDePasse, boolean isAdmin) {
         this.ID = ID;
@@ -28,6 +32,7 @@ public class Utilisateurs {
         this.age = age;
         this.role = role;
         this.monPanier = new ArrayList<Livre>();
+        this.l_nb_achats = new ArrayList<Integer>();
         this.motDePasse = motDePasse;
         this.isAdmin = isAdmin;
     }
@@ -101,6 +106,9 @@ public class Utilisateurs {
     public void setMonPanier(ArrayList<Livre> monPanier) {
         this.monPanier = monPanier;
     }
+    public ArrayList<Integer> getL_nb_achats(){
+        return l_nb_achats;
+    }
 
     public String getMotDePasse() {
         return motDePasse;
@@ -125,17 +133,44 @@ public class Utilisateurs {
 
     }
 
-    public void ajouterPanier(Livre l){
-        if(l.getStock()<=0){
-            System.out.println("Le livre n'est plus en stock !");
+    public void ajouterPanier(Livre l,int nb_achat){
+        if(nb_achat<=0){
+            System.out.println("On ne peut pas acheter un nombre négatif de livres !");
         }
         else{
-            monPanier.add(l);
+            int stk = l.getStock();
+            if(stk<nb_achat){
+                System.out.println("Le livre n'est plus en stock !");
+            }
+            else{
+                monPanier.add(l);
+                l_nb_achats.add((Integer)nb_achat);
+            }
         }
     }
 
     public void viderPanier(){
         monPanier.clear();
+        l_nb_achats.clear();
+    }
+
+    public void validerPanier(){
+        try {
+            // Création d'une nouvelle connexion à la base de données
+            Connexion connexion = new Connexion("ece_shopping_4", "root", "");
+            for(int i=0;i<monPanier.size();i++){
+                int stock_final = monPanier.get(i).getStock() - l_nb_achats.get(i);
+                String requete = "UPDATE livre SET stock = "+stock_final+" WHERE identifiant = "+monPanier.get(i).getIdentifiant()+";";
+                connexion.executeUpdate(requete);
+                monPanier.get(i).setStock(stock_final);
+            }
+
+
+            connexion.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

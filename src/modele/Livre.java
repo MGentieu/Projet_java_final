@@ -17,6 +17,42 @@ public class Livre {
 
 
     public Livre(){}
+
+    public Livre(int id){
+        this.stock = 0;
+        try{
+            Connexion conn = new Connexion("ece_shopping_4","root","");
+            String requete = "SELECT * FROM livre WHERE identifiant = '" + id + "';";
+            int stock_donnee = 0;
+            conn.setRset(conn.getStmt().executeQuery(requete));
+
+            // récupération du résultat de l'ordre
+            conn.setRsetMeta(conn.getRset().getMetaData());
+
+            // calcul du nombre de colonnes du resultat
+            int nbColonne = conn.getRsetMeta().getColumnCount();
+            if(conn.getRset().next()){
+                setIdentifiant(Integer.parseInt(conn.getRset().getString(1)));
+                setNom(conn.getRset().getString(2));
+                setDescription(conn.getRset().getString(3));
+                setEditeur(conn.getRset().getString(5));
+                setAuteur(conn.getRset().getString(6));
+                setType(conn.getRset().getString(7));
+                setStock(Integer.parseInt(conn.getRset().getString(8)));
+                setPrix(Double.parseDouble(conn.getRset().getString(9)));
+                conn.close();
+
+            }
+            else{
+                System.out.println("Pas de problème de connexion, mais le livre n'a pas été trouvé !");
+                conn.close();
+
+            }
+        }
+        catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     public Livre(String N,String T,String I,int S,String A,String E,String D,double P)
     {
         nom=N;
@@ -123,6 +159,8 @@ public class Livre {
             return -1;
         }
     }
+
+
 
 
 }

@@ -262,7 +262,7 @@ public class Connexion {
     }
 
     public Utilisateurs recherche_login(String email, String mdp) throws SQLException{
-        Utilisateurs u = null;
+        Utilisateurs u = new Utilisateurs();
         String requete = "SELECT * FROM client WHERE (email = '"+email+"' AND mot_de_passe = '"+mdp+"');";
         rset = stmt.executeQuery(requete);
 
@@ -272,7 +272,6 @@ public class Connexion {
         // calcul du nombre de colonnes du resultat
         int nbColonne = rsetMeta.getColumnCount();
         if(rset.next()){
-            u = new Utilisateurs();
             u.setNom(rset.getString(2));
             u.setPrenom(rset.getString(3));
             u.setAge(Integer.parseInt(rset.getString(4)));
