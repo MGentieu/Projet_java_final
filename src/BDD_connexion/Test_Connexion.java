@@ -18,7 +18,7 @@ public class Test_Connexion {
 
         try {
             // Création d'une nouvelle connexion à la base de données
-            Connexion connexion = new Connexion("ece_shopping_4", "root", "");
+            Connexion connexion = new Connexion("ece_shopping", "root", "");
             u = connexion.recherche_login("maxime.ambroise@edu.ece.fr", "maxime05");
             u.ajouterPanier(l1, 1);
             u.ajouterPanier(l2, 1);

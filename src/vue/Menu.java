@@ -178,9 +178,12 @@ public class Menu implements ActionListener {
         if (ev.getSource() == C1) {
             try {
                 // recupération des livre dans la BDD
-                Connexion conn = new Connexion("ece_shopping_4","root","");
+                Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> policiers = conn.recherche_par_categorie("Policier");
                 this.create_panneau("Projet_Java/policier.jpg", policiers);
+                for(int i=0;i<policiers.size();i++){
+                    policiers.get(i).setImage("categorie.png");
+                }
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -189,9 +192,10 @@ public class Menu implements ActionListener {
         } else if (ev.getSource() == C2) {
             try {
                 // recupération des livre dans la BDD
-                Connexion conn = new Connexion("ece_shopping_4","root","");
+                Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> sciencef = conn.recherche_par_categorie("Science-Fiction");
                 this.create_panneau("Projet_Java/policier.jpg", sciencef);
+
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -201,7 +205,7 @@ public class Menu implements ActionListener {
             // recupération des livre dans la BDD
             try {
                 // recupération des livre dans la BDD
-                Connexion conn = new Connexion("ece_shopping_4","root","");
+                Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> romantiques = conn.recherche_par_categorie("Romantique");
                 this.create_panneau("Projet_Java/policier.jpg", romantiques);
                 conn.close();
@@ -213,7 +217,7 @@ public class Menu implements ActionListener {
             // recupération des livre dans la BDD
             try {
                 // recupération des livre dans la BDD
-                Connexion conn = new Connexion("ece_shopping_4","root","");
+                Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> theatrales = conn.recherche_par_categorie("Theatrale");
                 this.create_panneau("Projet_Java/policier.jpg", theatrales);
                 conn.close();
@@ -225,7 +229,7 @@ public class Menu implements ActionListener {
             // recupération des livre dans la BDD
             try {
                 // recupération des livre dans la BDD
-                Connexion conn = new Connexion("ece_shopping_4","root","");
+                Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> aventures = conn.recherche_par_categorie("Aventure");
                 this.create_panneau("Projet_Java/policier.jpg", aventures);
                 conn.close();
@@ -237,7 +241,7 @@ public class Menu implements ActionListener {
             // recupération des livre dans la BDD
             try {
                 // recupération des livre dans la BDD
-                Connexion conn = new Connexion("ece_shopping_4","root","");
+                Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> philo = conn.recherche_par_categorie("Philosophique");
                 this.create_panneau("Projet_Java/policier.jpg", philo);
                 conn.close();
@@ -246,8 +250,8 @@ public class Menu implements ActionListener {
             }
         }
         else if (ev.getSource() == P1 ) {
-            Livre L1 =new Livre("AAAA","","Projet_Java\\categorie.png",5,"EJ","LUI","AAAAAAAAAAAA",10.99);
-            Livre L2 =new Livre("BBBB","","Projet_Java\\categorie.png",6,"EJ","LUI","AAAAAAAAAAAA",12.99);
+            Livre L1 =new Livre("AAAA","","categorie.png",5,"EJ","LUI","AAAAAAAAAAAA",10.99);
+            Livre L2 =new Livre("BBBB","","categorie.png",6,"EJ","LUI","AAAAAAAAAAAA",12.99);
 
             PanierClient monpanier=new PanierClient();
             monpanier.AjoutArticle(L1);

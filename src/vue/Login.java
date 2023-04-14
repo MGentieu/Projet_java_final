@@ -57,7 +57,7 @@ public class Login extends JFrame {
                 // Code pour la connexion
                 try {
                     // recupération de l'utilisateur correspondant dans la BDD :
-                    Connexion conn = new Connexion("ece_shopping_4","root","");
+                    Connexion conn = new Connexion("ece_shopping","root","");
                     System.out.println(emailField.getText());
                     System.out.println(passwordField.getSelectedText());
                     Utilisateurs u = conn.recherche_login(emailField.getText(),passwordField.getSelectedText());

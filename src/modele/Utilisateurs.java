@@ -157,7 +157,7 @@ public class Utilisateurs {
     public void validerPanier(){
         try {
             // Création d'une nouvelle connexion à la base de données
-            Connexion connexion = new Connexion("ece_shopping_4", "root", "");
+            Connexion connexion = new Connexion("ece_shopping", "root", "");
             for(int i=0;i<monPanier.size();i++){
                 int stock_final = monPanier.get(i).getStock() - l_nb_achats.get(i);
                 String requete = "UPDATE livre SET stock = "+stock_final+" WHERE identifiant = "+monPanier.get(i).getIdentifiant()+";";

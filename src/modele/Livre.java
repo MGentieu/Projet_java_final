@@ -21,7 +21,7 @@ public class Livre {
     public Livre(int id){
         this.stock = 0;
         try{
-            Connexion conn = new Connexion("ece_shopping_4","root","");
+            Connexion conn = new Connexion("ece_shopping","root","");
             String requete = "SELECT * FROM livre WHERE identifiant = '" + id + "';";
             int stock_donnee = 0;
             conn.setRset(conn.getStmt().executeQuery(requete));
@@ -128,7 +128,7 @@ public class Livre {
     public int recherche_Livre_stock(){ //RETOURNE LA VALEUR STOCKEE DU LIVRE DANS LA BDD.
                                         //RETOURNE -1 SI IL Y A UN PROBLEME.
         try{
-            Connexion conn = new Connexion("ece_shopping_4","root","");
+            Connexion conn = new Connexion("ece_shopping","root","");
             String requete = "SELECT * FROM livre WHERE identifiant = '" + identifiant + "';";
             int stock_donnee = 0;
             conn.setRset(conn.getStmt().executeQuery(requete));

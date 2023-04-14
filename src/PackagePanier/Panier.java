@@ -1,16 +1,18 @@
 package PackagePanier;
 
+import controleur.MoinsAction;
+import controleur.PlusAction;
+import controleur.ValiderPanierAction;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Panier implements ActionListener {
-
-    public int taillePanier;
-    JButton Valider ;
-    public int TotalPanier;
-    public int Q=0;
+public class Panier  {
+    private int taillePanier;
+    private JButton Valider ;
+    private int TotalPanier;
     public Panier(PanierClient PanierAfficher, JPanel panelPanier)
     {
         taillePanier=PanierAfficher.monpanier.size();
@@ -37,11 +39,10 @@ public class Panier implements ActionListener {
             JButton boutonPlus ;
             JButton boutonMoins ;
             JButton boutonDescription1 ;
-            boutonPlus = new JButton("+");
-            boutonMoins= new JButton("-");
+            boutonPlus = new JButton(new PlusAction("+"));
+            boutonMoins= new JButton(new MoinsAction("-"));
             boutonDescription1= new JButton("Description");
-            boutonPlus.addActionListener(this);
-            JLabel Quant=new JLabel("QUANTITE: "+Q);
+            JLabel Quant=new JLabel("QUANTITE: "+PanierAfficher.monpanier.get(i).stock);
             JLabel Prix=new JLabel("Prix: "+PanierAfficher.monpanier.get(i).prix);
 
             JPanel PB = new JPanel(new GridLayout(5, 1));
@@ -61,7 +62,7 @@ public class Panier implements ActionListener {
 
         JPanel MontantTotal=new JPanel(new GridLayout(1,2,15,30));
         JLabel Montant=new JLabel("TOTAL: "+TotalPanier+" €");
-        Valider=new JButton("VALIDER");
+        Valider=new JButton(new ValiderPanierAction("Valider",panelPanier,TotalPanier));
         Valider.setPreferredSize(new Dimension(100, 50));
         MontantTotal.add(Montant);
         MontantTotal.add(Valider);
@@ -69,7 +70,5 @@ public class Panier implements ActionListener {
         panelPanier.add(EspacePanier);
         panelPanier.add(MontantTotal);
     }
-    public void actionPerformed(ActionEvent ev) {
 
-    }
 }
