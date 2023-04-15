@@ -1,5 +1,7 @@
 package vue;
 import modele.ModeleFenetre;
+import modele.Utilisateurs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,11 +14,11 @@ public class MaFenetre extends JFrame implements ActionListener
 
 
 
-    public MaFenetre () {
+    public MaFenetre (Utilisateurs u) {
         
         setSize (1550,1000);
         setTitle ("BookLand");
-        new Menu(this);
+        new Menu(this,u);
         // acceuil
         JLabel labelTitre = Menu.accueil_page();
         getContentPane().removeAll();

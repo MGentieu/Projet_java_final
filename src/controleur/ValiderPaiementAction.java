@@ -19,6 +19,7 @@ public class ValiderPaiementAction extends AbstractAction {
 
         //Ici liens avec la base donnee pour vider le panier et mettre à jour l'historique
 
+
         getAnciennepage().setVisible(false);
         getPageremerciement().setTitle("REMERCIEMENT");
         getPageremerciement().setSize(800,150);

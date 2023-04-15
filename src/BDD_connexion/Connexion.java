@@ -272,6 +272,7 @@ public class Connexion {
         // calcul du nombre de colonnes du resultat
         int nbColonne = rsetMeta.getColumnCount();
         if(rset.next()){
+            u.setID(Integer.parseInt(rset.getString(1)));
             u.setNom(rset.getString(2));
             u.setPrenom(rset.getString(3));
             u.setAge(Integer.parseInt(rset.getString(4)));

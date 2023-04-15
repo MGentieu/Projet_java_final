@@ -10,9 +10,15 @@ public class PanierClient {
     public PanierClient(){
         monpanier = new ArrayList<>(); // initialisation de la liste
     }
-    public void AjoutArticle( Livre nouvLiv)
+    public ArrayList<ArticlePanier> getMonpanier(){
+        return monpanier;
+    }
+    public void AjoutArticle( Livre nouvLiv, int nb_achat)
     {
-        ArticlePanier nouveauArticle=new ArticlePanier(nouvLiv);
+        ArticlePanier nouveauArticle=new ArticlePanier(nouvLiv, nb_achat);
         monpanier.add(nouveauArticle);
+    }
+    public void clear(){
+        monpanier.clear();
     }
 }

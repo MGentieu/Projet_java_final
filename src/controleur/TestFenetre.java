@@ -14,13 +14,15 @@ public class TestFenetre{
 
 
         //  MESSAGE DE MARTIN :
-        // JE N'ARRIVE PAS A ECUPERER LE MOT DE PASSE DANS L'ECRAN DU LOGIN.
-        // CELA EST PEUT ETRE DU AU MOT DE PASSE QUI EST DE TYPE "JPASSWORDFIELD" AU LIE DE "JTEXTFIELD".
-        //new Login();
+        // MAFENETRE EST INCLUE DANS LE LOGIN : FAUT JUSTE METTRE UN EMAIL ET UN MOT DE PASSE D'UTILISATEUR QUI CONVIENT.
+        Login log = new Login();
 
+        /*
+        System.out.println(u.toString());
         MaFenetre Accueil = new MaFenetre();
         Accueil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Accueil.setResizable(false);
+        */
 
     }
 }

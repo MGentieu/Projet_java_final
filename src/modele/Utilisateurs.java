@@ -1,7 +1,9 @@
 package modele;
 
 import BDD_connexion.Connexion;
+import PackagePanier.PanierClient;
 import modele.Livre;
+import PackagePanier.Panier;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,9 +21,94 @@ public class Utilisateurs {
     protected String motDePasse;
     protected boolean isAdmin = false;
 
+    private PanierClient veritable_Panier;
+
+
+
     public Utilisateurs(){
         this.monPanier = new ArrayList<Livre>();
         this.l_nb_achats = new ArrayList<Integer>();
+        this.veritable_Panier = new PanierClient();
+    }
+    public Utilisateurs(int id){
+        this.monPanier = new ArrayList<Livre>();
+        this.l_nb_achats = new ArrayList<Integer>();
+        try{
+            Connexion conn = new Connexion("ece_shopping","root","");
+            String requete = "SELECT * FROM client WHERE id = "+id+";";
+
+            int stock_donnee = 0;
+            conn.setRset(conn.getStmt().executeQuery(requete));
+
+            // récupération du résultat de l'ordre
+            conn.setRsetMeta(conn.getRset().getMetaData());
+
+            // calcul du nombre de colonnes du resultat
+            int nbColonne = conn.getRsetMeta().getColumnCount();
+            System.out.println(nbColonne);
+            if(conn.getRset().next()){
+
+                this.ID = id;
+                setNom(conn.getRset().getString(2));
+                setPrenom(conn.getRset().getString(3));
+                setAge(Integer.parseInt(conn.getRset().getString(4)));
+                setDateNaiss(conn.getRset().getString(5));
+                setEmail(conn.getRset().getString(6));
+                setMotDePasse(conn.getRset().getString(7));
+                setAdmin(false);
+
+
+
+            }
+            else{
+                System.out.println("Pas de problème de connexion, mais l'utilisateur n'a pas été trouvé !");
+                conn.close();
+
+            }
+        }
+        catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Utilisateurs(String mail, String mdp){
+        this.monPanier = new ArrayList<Livre>();
+        this.l_nb_achats = new ArrayList<Integer>();
+        this.veritable_Panier = new PanierClient();
+        try{
+            Connexion conn = new Connexion("ece_shopping","root","");
+            String requete = "SELECT * FROM employee WHERE email = '"+mail+"' AND mot_de_passe = '"+mdp+"';";
+            int stock_donnee = 0;
+            conn.setRset(conn.getStmt().executeQuery(requete));
+
+            // récupération du résultat de l'ordre
+            conn.setRsetMeta(conn.getRset().getMetaData());
+
+            // calcul du nombre de colonnes du resultat
+            int nbColonne = conn.getRsetMeta().getColumnCount();
+            if(conn.getRset().next()){
+                if(conn.getRset().next()){
+                    this.ID = Integer.parseInt(conn.getRset().getString(1));
+                    setNom(conn.getRset().getString(2));
+                    setPrenom(conn.getRset().getString(3));
+                    setAge(Integer.parseInt(conn.getRset().getString(4)));
+                    setDateNaiss(conn.getRset().getString(5));
+                    setEmail(mail);
+                    setMotDePasse(mdp);
+                    setAdmin(false);
+
+                }
+
+            }
+            else{
+                System.out.println("Pas de problème de connexion, mais le livre n'a pas été trouvé !");
+                conn.close();
+
+            }
+        }
+        catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     public Utilisateurs(int ID, String nom, String prenom, String email, String dateNaiss, int age, int role,String motDePasse, boolean isAdmin) {
         this.ID = ID;
@@ -33,6 +120,7 @@ public class Utilisateurs {
         this.role = role;
         this.monPanier = new ArrayList<Livre>();
         this.l_nb_achats = new ArrayList<Integer>();
+        this.veritable_Panier = new PanierClient();
         this.motDePasse = motDePasse;
         this.isAdmin = isAdmin;
     }
@@ -126,10 +214,14 @@ public class Utilisateurs {
         isAdmin = admin;
     }
 
+    public PanierClient getVeritable_Panier(){
+        return veritable_Panier;
+    }
+
     @Override
     public String toString() {
 
-        return (prenom + " " + nom + ". Âge : " + age + " ans. Date de naissance : " + dateNaiss + ".\nemail : " + email + ". Mot de passe : " + motDePasse);
+        return (getID()+"   "+prenom + " " + nom + ". Âge : " + age + " ans. Date de naissance : " + dateNaiss + ".\nemail : " + email + ". Mot de passe : " + motDePasse);
 
     }
 
@@ -145,6 +237,7 @@ public class Utilisateurs {
             else{
                 monPanier.add(l);
                 l_nb_achats.add((Integer)nb_achat);
+                veritable_Panier.AjoutArticle(l,nb_achat);
             }
         }
     }
@@ -152,6 +245,7 @@ public class Utilisateurs {
     public void viderPanier(){
         monPanier.clear();
         l_nb_achats.clear();
+        veritable_Panier.clear();
     }
 
     public void validerPanier(){

@@ -23,6 +23,7 @@ import BDD_connexion.Connexion;
 
 public class Menu implements ActionListener {
     JMenu Categorie, Accueil, Apropos, Panier, Compte ;
+    private Utilisateurs u;
 
 
     JMenuItem C1, C2, C3, C4, C5, C6;
@@ -47,8 +48,9 @@ public class Menu implements ActionListener {
     Image backgroundImage;
 
 
-    Menu(MaFenetre frame) {
+    Menu(MaFenetre frame, Utilisateurs u) {
         this.frame = frame;
+        this.u = u;
 
         // Créer la barre de menu
         JMenuBar menubar = new JMenuBar();
@@ -250,14 +252,17 @@ public class Menu implements ActionListener {
             }
         }
         else if (ev.getSource() == P1 ) {
-            Livre L1 =new Livre("AAAA","","categorie.png",5,"EJ","LUI","AAAAAAAAAAAA",10.99);
-            Livre L2 =new Livre("BBBB","","categorie.png",6,"EJ","LUI","AAAAAAAAAAAA",12.99);
+            //Livre L1 =new Livre("AAAA","","categorie.png",5,"EJ","LUI","AAAAAAAAAAAA",10.99);
+            //Livre L2 =new Livre("BBBB","","categorie.png",6,"EJ","LUI","AAAAAAAAAAAA",12.99);
 
-            PanierClient monpanier=new PanierClient();
-            monpanier.AjoutArticle(L1);
-            monpanier.AjoutArticle(L2);
+            //PanierClient monpanier=new PanierClient();
+            //monpanier.AjoutArticle(L1);
+            //monpanier.AjoutArticle(L2);
+            Livre l1 = new Livre(1);
+            u.getVeritable_Panier().AjoutArticle(l1,1);
+            System.out.println(l1.toString());
             JPanel panelPanier=new JPanel();
-            PackagePanier.Panier p1=new Panier(monpanier,panelPanier);
+            PackagePanier.Panier p1=new Panier(u,panelPanier);
 
             newPanier.add(panelPanier);
             frame.getContentPane().removeAll();
