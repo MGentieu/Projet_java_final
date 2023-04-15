@@ -261,6 +261,30 @@ public class Connexion {
         return liste;
     }
 
+    public Livre recher_identifiant(int id) throws SQLException{
+        String requete = "SELECT * FROM livre WHERE identifiant = '" + id + "';";
+        int stock_donnee = 0;
+        Livre l = new Livre();
+        rset =stmt.executeQuery(requete);
+
+        // récupération du résultat de l'ordre
+        rsetMeta=rset.getMetaData();
+
+        // calcul du nombre de colonnes du resultat
+        int nbColonne = rsetMeta.getColumnCount();
+        if(rset.next()) {
+            l.setIdentifiant(Integer.parseInt(rset.getString(1)));
+            l.setNom(rset.getString(2));
+            l.setDescription(rset.getString(3));
+            l.setEditeur(rset.getString(5));
+            l.setAuteur(rset.getString(6));
+            l.setType(rset.getString(7));
+            l.setStock(Integer.parseInt(rset.getString(8)));
+            l.setPrix(Double.parseDouble(rset.getString(9)));
+        }
+        return l;
+    }
+
     public Utilisateurs recherche_login(String email, String mdp) throws SQLException{
         Utilisateurs u = new Utilisateurs();
         String requete = "SELECT * FROM client WHERE (email = '"+email+"' AND mot_de_passe = '"+mdp+"');";
@@ -271,6 +295,7 @@ public class Connexion {
 
         // calcul du nombre de colonnes du resultat
         int nbColonne = rsetMeta.getColumnCount();
+
         if(rset.next()){
             u.setID(Integer.parseInt(rset.getString(1)));
             u.setNom(rset.getString(2));

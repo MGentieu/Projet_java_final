@@ -232,24 +232,44 @@ public class Utilisateurs {
         else{
             int stk = l.getStock();
             boolean verif_panier = false;
-            for(int i=0;i<veritable_Panier.getMonpanier().size();i++){
-                if(l.getIdentifiant() == monPanier.get(i).getIdentifiant()){
+            try{
+                Connexion conn = new Connexion("ece_shopping","root","");
+                /*String requete = "SELECT * FROM panier where id_client = "+getID()+";";
+                conn.setRset(conn.getStmt().executeQuery(requete));
+
+                // récupération du résultat de l'ordre
+                conn.setRsetMeta(conn.getRset().getMetaData());
+
+                // calcul du nombre de colonnes du resultat
+                int nbColonne = conn.getRsetMeta().getColumnCount();
+                int i=0;*/
+                for(int i=0;i<monPanier.size();i++){
+                    if(l.getIdentifiant() == monPanier.get(i).getIdentifiant()){
 
 
-
-                    if(stk>=l_nb_achats.get(i)+1){
-                        l_nb_achats.set(i,l_nb_achats.get(i)+1);
-                        veritable_Panier.getMonpanier().get(i).setStock(veritable_Panier.getMonpanier().get(i).getStock()+1);
+                        if(stk>=l_nb_achats.get(i)+nb_achat){
+                            l_nb_achats.set(i,l_nb_achats.get(i)+nb_achat);
+                            veritable_Panier.getMonpanier().get(i).setStock(veritable_Panier.getMonpanier().get(i).getStock()+nb_achat);
+                            String requete = "UPDATE `panier` SET `quantite` = '"+l_nb_achats.get(i)+"' WHERE (`panier`.`id_client` = "+getID()+" AND `panier`.`id_livre` = "+l.getIdentifiant()+";";
+                            conn.executeUpdate(requete);
+                        }
+                        verif_panier = true;
+                        break;
                     }
-                    verif_panier = true;
-                    break;
+                    i++;
                 }
+                if(!verif_panier){
+                    String requete = "INSERT INTO `panier` (`identifiant`, `id_livre`, `quantite`, `id_client`) VALUES (NULL, '"+l.getIdentifiant()+"', '"+nb_achat+"', '"+getID()+"');";
+                    conn.executeUpdate(requete);
+                    monPanier.add(l);
+                    l_nb_achats.add((Integer)nb_achat);
+                    veritable_Panier.AjoutArticle(l,nb_achat);
+                }
+                conn.close();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            if(!verif_panier){
-                monPanier.add(l);
-                l_nb_achats.add((Integer)nb_achat);
-                veritable_Panier.AjoutArticle(l,nb_achat);
-            }
+
         }
     }
 
@@ -308,5 +328,55 @@ public class Utilisateurs {
             }
         }
     }
+    public void ajouterPanier2(){
+        try{
+            Connexion conn = new Connexion("ece_shopping","root","");
+            String requete = "SELECT * FROM panier where id_client = "+getID()+";";
+            conn.setRset(conn.getStmt().executeQuery(requete));
+
+            // récupération du résultat de l'ordre
+            conn.setRsetMeta(conn.getRset().getMetaData());
+
+            // calcul du nombre de colonnes du resultat
+            int nbColonne = conn.getRsetMeta().getColumnCount();
+            int i=0;
+            while(conn.getRset().next()){
+
+                Livre l1 = new Livre(Integer.parseInt(conn.getRset().getString(2)));
+                int quantite = Integer.parseInt(conn.getRset().getString(3));
+                monPanier.add(l1);
+                l_nb_achats.add(quantite);
+                veritable_Panier.AjoutArticle(l1,quantite);
+            }
+            conn.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void recup_panier(){
+        try{
+            Connexion connexion = new Connexion("ece_shopping", "root", "");
+            String requete = "SELECT * FROM panier WHERE id_client = "+getID()+";";
+            connexion.setRset(connexion.getStmt().executeQuery(requete));
+
+            // récupération du résultat de l'ordre
+            connexion.setRsetMeta(connexion.getRset().getMetaData());
+
+            // calcul du nombre de colonnes du resultat
+            int nbColonne = connexion.getRsetMeta().getColumnCount();
+            while(connexion.getRset().next()){
+                int id = Integer.parseInt(connexion.getRset().getString(2));
+                int nb_achat = Integer.parseInt(connexion.getRset().getString(3));
+                Livre l = new Livre(id);
+                System.out.println(l.toString());
+                //ajouterPanier2();
+            }
+            connexion.close();
+        }catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

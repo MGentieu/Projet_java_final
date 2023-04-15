@@ -25,7 +25,7 @@ public class Login extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.create_login();
         setVisible(true);
-        //u = new Utilisateurs();
+        u = new Utilisateurs();
     }
 
     public String getEmail(){
@@ -111,11 +111,17 @@ public class Login extends JFrame {
                     System.out.println(mdp);
                     u = conn.recherche_login(mail,mdp);
                     System.out.println(u.toString());
+                    u.ajouterPanier2();
+                    for(int j=0;j<u.getMonPanier().size();j++){
+                        System.out.println(u.getMonPanier().get(j).toString()+"\n"+u.getL_nb_achats().get(j)+"   "
+                                +u.getVeritable_Panier().getMonpanier().get(j).getStock()+"   "+u.getMonPanier().get(j).getIdentifiant());
+                    }
                     if(u.getID()==0){
                         System.out.println("Erreur de login.");
                     }
                     else{
                         System.out.println("Connexion réussie !\n"+u.toString());
+                        setVisible(false);
                         MaFenetre Accueil = new MaFenetre(u);
                         Accueil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         Accueil.setResizable(false);
@@ -124,6 +130,7 @@ public class Login extends JFrame {
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+
             }
         });
 
