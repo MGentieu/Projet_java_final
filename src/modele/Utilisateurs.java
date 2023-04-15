@@ -231,16 +231,28 @@ public class Utilisateurs {
         }
         else{
             int stk = l.getStock();
-            if(stk<nb_achat){
-                System.out.println("Le livre n'est plus en stock !");
+            boolean verif_panier = false;
+            for(int i=0;i<veritable_Panier.getMonpanier().size();i++){
+                if(l.getIdentifiant() == monPanier.get(i).getIdentifiant()){
+
+
+
+                    if(stk>=l_nb_achats.get(i)+1){
+                        l_nb_achats.set(i,l_nb_achats.get(i)+1);
+                        veritable_Panier.getMonpanier().get(i).setStock(veritable_Panier.getMonpanier().get(i).getStock()+1);
+                    }
+                    verif_panier = true;
+                    break;
+                }
             }
-            else{
+            if(!verif_panier){
                 monPanier.add(l);
                 l_nb_achats.add((Integer)nb_achat);
                 veritable_Panier.AjoutArticle(l,nb_achat);
             }
         }
     }
+
 
     public void viderPanier(){
         monPanier.clear();
@@ -264,6 +276,36 @@ public class Utilisateurs {
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void suppr_livre(Livre l){
+        for(int i=0;i<monPanier.size();i++){
+            if(l.getIdentifiant()==monPanier.get(i).getIdentifiant()){
+                monPanier.remove(i);
+                l_nb_achats.remove(i);
+                veritable_Panier.getMonpanier().remove(i);
+            }
+        }
+    }
+    public void soustraire(Livre l, int nb_sous){
+        if(nb_sous<=0){
+            System.out.println("Pas de soustraction par un nb_négatif !");
+        }
+        else{
+            for(int i=0;i<veritable_Panier.getMonpanier().size();i++){
+                if(l.getIdentifiant() == monPanier.get(i).getIdentifiant()){
+
+                    if(l_nb_achats.get(i)-nb_sous>=0){
+                        l_nb_achats.set(i,l_nb_achats.get(i)-nb_sous);
+                        veritable_Panier.getMonpanier().get(i).setStock(veritable_Panier.getMonpanier().get(i).getStock()-nb_sous);
+                    }
+                    else{
+                        suppr_livre(l);
+                    }
+                    break;
+                }
+            }
         }
     }
 

@@ -258,9 +258,14 @@ public class Menu implements ActionListener {
             //PanierClient monpanier=new PanierClient();
             //monpanier.AjoutArticle(L1);
             //monpanier.AjoutArticle(L2);
-            Livre l1 = new Livre(1);
-            u.getVeritable_Panier().AjoutArticle(l1,1);
-            System.out.println(l1.toString());
+            /*Livre l1 = new Livre(1);
+            u.ajouterPanier(l1,1);
+            System.out.println(u.getMonPanier().get(0).toString()+"\n"+u.getL_nb_achats().get(0)+"   "
+            +u.getVeritable_Panier().getMonpanier().get(0).getStock());
+            u.ajouterPanier(l1,1);
+            System.out.println(u.getMonPanier().get(0).toString()+"\n"+u.getL_nb_achats().get(0)+"   "
+                    +u.getVeritable_Panier().getMonpanier().get(0).getStock());
+            System.out.println(l1.toString());*/
             JPanel panelPanier=new JPanel();
             PackagePanier.Panier p1=new Panier(u,panelPanier);
 
@@ -318,7 +323,7 @@ public class Menu implements ActionListener {
         // Définition de la taille du JPanel
         panel.setPreferredSize(size);
 
-        MonPanel p = new MonPanel(livres);
+        MonPanel p = new MonPanel(livres, u);
         panel.add(p, BorderLayout.CENTER);
 
         frame.getContentPane().removeAll();

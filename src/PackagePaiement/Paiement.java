@@ -1,6 +1,7 @@
 package PackagePaiement;
 
 import controleur.ChoixPaiementAction;
+import modele.Utilisateurs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +10,15 @@ import java.awt.event.ActionListener;
 
 public class Paiement  {
 
+    private Utilisateurs u;
     private int PrixPanier;
     private JRadioButton Paypal ;
     private JRadioButton CarteBancaire ;
     private JRadioButton VISA;
     private JPanel Fond=new JPanel(new GridLayout(3,1));
-    public Paiement (int montant,JPanel FenPaiement,JFrame frame)
+    public Paiement (int montant,JPanel FenPaiement,JFrame frame, Utilisateurs u)
     {
+        this.u = u;
         JPanel AfficheMont=new JPanel();
         PrixPanier=montant;
         JLabel Prix=new JLabel("Montant : "+getTotaPanier());
@@ -26,9 +29,9 @@ public class Paiement  {
 
         JPanel ChoixPaiement =new JPanel(new GridLayout(4, 1));
         JLabel ChoixPai=new JLabel(" Choisissez le type de Paiment: ");
-        Paypal = new JRadioButton(new ChoixPaiementAction("Paypal",frame));
-        CarteBancaire = new JRadioButton(new ChoixPaiementAction("CB",frame));
-        VISA = new JRadioButton(new ChoixPaiementAction("VISA",frame));
+        Paypal = new JRadioButton(new ChoixPaiementAction("Paypal",frame,u));
+        CarteBancaire = new JRadioButton(new ChoixPaiementAction("CB",frame,u));
+        VISA = new JRadioButton(new ChoixPaiementAction("VISA",frame,u));
         CarteBancaire.setText("CB");
         Paypal.setText("PAYPAL");
         VISA.setText("VISA");
@@ -52,4 +55,5 @@ public class Paiement  {
     {
         return PrixPanier;
     }
+    public Utilisateurs getU(){return u;}
 }

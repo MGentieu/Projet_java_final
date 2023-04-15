@@ -23,4 +23,10 @@ public class ArticlePanier {
     public double getPrix(){
         return prix;
     }
+    public int getStock(){
+        return stock;
+    }
+    public void setStock(int nouveau_nb_achat){
+        stock = nouveau_nb_achat;
+    }
 }

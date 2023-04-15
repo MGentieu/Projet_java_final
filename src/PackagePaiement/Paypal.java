@@ -1,16 +1,22 @@
 package PackagePaiement;
 
 import controleur.ValiderPaiementAction;
+import modele.Utilisateurs;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Paypal {
 
+    private Utilisateurs u;
+    public Utilisateurs getU(){return u;}
 
     private JPanel donnee=new JPanel(new GridLayout(1, 2,0,15));
-    public Paypal(JFrame PagePaiement,String nomType)
+    public Paypal(JFrame PagePaiement,String nomType, Utilisateurs u)
     {
+        this.u = u;
+        u.validerPanier();
+        u.viderPanier();
         PagePaiement.setSize (500,500 );
         PagePaiement.setTitle ("Paiement");
 

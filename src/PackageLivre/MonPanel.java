@@ -1,25 +1,38 @@
 package PackageLivre;
 import modele.Livre;
+import modele.Utilisateurs;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MonPanel extends JPanel {
+public class MonPanel extends JPanel implements ActionListener {
 
     int x=1,y=3;
     int compteur=0;
 
-
-    JButton boutonAcheter1 ;
-    JButton boutonDescription1 ;
+    private ArrayList<Livre> liste_l;
+    ArrayList<JButton> boutonAcheter1 ;
+    public ArrayList<JButton> getBoutonAcheter1(){
+        return boutonAcheter1;
+    }
+    ArrayList<JButton> boutonDescription1 ;
     JLabel quantite;
 
+    private Utilisateurs u;
 
-    public MonPanel(ArrayList<Livre> livres)
+    public Utilisateurs getU(){return u;}
+
+
+    public MonPanel(ArrayList<Livre> livres, Utilisateurs u)
     {
-         int taille=livres.size();
+        liste_l = livres;
+        boutonAcheter1 = new ArrayList<JButton>();
+        boutonDescription1 = new ArrayList<JButton>();
+        this.u = u;
+        int taille=liste_l.size();
         int y=1;
         do {
             taille= taille -(3);
@@ -48,10 +61,10 @@ public class MonPanel extends JPanel {
             cel.add(POL1, BorderLayout.CENTER);
 
             //Bouton acheter
-             boutonAcheter1 = new JButton("Ajouter au Panier");
-             boutonAcheter1.addActionListener(this::actionPerformed);
+             boutonAcheter1.add( new JButton("Ajouter au Panier"));
+             boutonAcheter1.get(i).addActionListener(this/*::actionPerformed*/);
              // Bouton description
-             boutonDescription1 = new JButton("Voir +");
+             boutonDescription1.add(new JButton("Voir +"));
              // Texte Quantité
              quantite = new JLabel("QUANTITE: "+livres.get(i).getStock());
              quantite.setForeground(Color.BLACK);
@@ -60,9 +73,9 @@ public class MonPanel extends JPanel {
 
 
             JPanel PB = new JPanel(new GridLayout(6, 1));
-            PB.add(boutonAcheter1);
+            PB.add(boutonAcheter1.get(i));
             PB.add(createTransparentPanel(1));
-            PB.add(boutonDescription1);
+            PB.add(boutonDescription1.get(i));
             PB.add(createTransparentPanel(1));
             PB.add(quantite, BorderLayout.CENTER);
 
@@ -83,8 +96,16 @@ public class MonPanel extends JPanel {
 
     }
     public void actionPerformed(ActionEvent ev) {
-        if (ev.getSource() == boutonAcheter1) {
-            System.out.println("AEAEHFNCHV");
+        for(int i=0;i<liste_l.size();i++){
+            if (ev.getSource() == boutonAcheter1.get(i)) {
+                System.out.println("AEAEHFNCHV");
+                u.ajouterPanier(liste_l.get(i),1);
+
+            }
+        }
+        for(int j=0;j<u.getMonPanier().size();j++){
+            System.out.println(u.getMonPanier().get(j).toString()+"\n"+u.getL_nb_achats().get(j)+"   "
+                    +u.getVeritable_Panier().getMonpanier().get(j).getStock());
         }
     }
 
