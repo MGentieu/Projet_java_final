@@ -26,6 +26,7 @@ public class CarteBleu {
         try{
             Connexion conn = new Connexion("ece_shopping","root","");
             conn.viderPanier(u);
+            //conn.validerOperation(u);
             conn.close();
         }catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

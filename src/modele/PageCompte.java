@@ -33,7 +33,7 @@ public class PageCompte {
 
         }
         else {
-            create_panneau_Admin(background_image);
+            create_panneau_Client(background_image);
         }
     }
 

@@ -13,6 +13,6 @@ public class MessageAEnvoyerAction  extends AbstractAction{
     }
     public void actionPerformed(ActionEvent e) {
         System.out.println("saisieRecher:"+messageAenvoyer.getText());
-
+        //remplacer par l'envoie dans la base de donnée
     }
 }

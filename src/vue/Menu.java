@@ -3,6 +3,7 @@ import PackageLivre.MonPanel;
 import PackagePanier.Panier;
 import PackagePanier.PanierClient;
 import modele.*;
+import controleur.OffreAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -109,7 +110,7 @@ public class Menu implements ActionListener {
         Accueil.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JPanel labelTitre = accueil_page();
+                JPanel labelTitre = accueil_page(frame,u);
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(labelTitre);
                 frame.getContentPane().revalidate();
@@ -267,14 +268,7 @@ public class Menu implements ActionListener {
             System.out.println(u.getMonPanier().get(0).toString()+"\n"+u.getL_nb_achats().get(0)+"   "
                     +u.getVeritable_Panier().getMonpanier().get(0).getStock());
             System.out.println(l1.toString());*/
-            JPanel panelPanier=new JPanel();
-            PackagePanier.Panier p1=new Panier(u,panelPanier);
-
-            newPanier.add(panelPanier);
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(newPanier);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
+            PackagePanier.Panier p1=new Panier(u,frame,"Projet_Java/policier.jpg");
         }
         else if (ev.getSource() == Co1 ) {
             PageCompte pageCOMPTE=new PageCompte(u,frame,"Projet_Java/policier.jpg");
@@ -303,7 +297,7 @@ public class Menu implements ActionListener {
         labelTitre.setHorizontalAlignment(JLabel.CENTER);
         return labelTitre;
     }*/
-    public static JPanel accueil_page() {
+    public static JPanel accueil_page(JFrame frame, Utilisateurs u1) {
         JPanel PanelAcueil = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -326,7 +320,8 @@ public class Menu implements ActionListener {
         JPanel Offre1 = new JPanel(new GridLayout(2, 1));
         JLabel LabelOffre1 = new JLabel("-30% si vous achetez 5 livres dans la catégorie Philosophique");
         LabelOffre1.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JButton Buttonoffre1 = new JButton("DECOUVRIR");
+        JButton Buttonoffre1;
+        Buttonoffre1= new JButton(new OffreAction("OFFRE PHILO",PanelAcueil,frame,u1));
         JPanel buttonPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel1.add(Buttonoffre1);
         Offre1.add(LabelOffre1);
@@ -335,7 +330,8 @@ public class Menu implements ActionListener {
         JPanel Offre2 = new JPanel(new GridLayout(2, 1));
         JLabel LabelOffre2 = new JLabel("Pour 2 romans policier achetés, le 3ème est offert !!! ");
         LabelOffre2.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JButton Buttonoffre2 = new JButton("DECOUVRIR");
+        JButton Buttonoffre2 = new JButton(new OffreAction("OFFRE POLICIER",PanelAcueil,frame,u1));
+
         JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel2.add(Buttonoffre2);
         Offre2.add(LabelOffre2);
@@ -344,7 +340,8 @@ public class Menu implements ActionListener {
         JPanel Offre3 = new JPanel(new GridLayout(2, 1));
         JLabel LabelOffre3 = new JLabel("-70% pour 6 Livres fantastiques achetés avant le 27 Avril 2023");
         LabelOffre3.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        JButton Buttonoffre3 = new JButton("DECOUVRIR");
+        JButton Buttonoffre3 = new JButton(new OffreAction("OFFRE FANTASTIQUE",PanelAcueil,frame,u1));
+
         JPanel buttonPanel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel3.add(Buttonoffre3);
         Offre3.add(LabelOffre3);

@@ -23,6 +23,8 @@ public class Utilisateurs {
 
     private PanierClient veritable_Panier;
 
+    private int q_totale_achat;
+
 
 
     public Utilisateurs(){
@@ -216,6 +218,9 @@ public class Utilisateurs {
 
     public PanierClient getVeritable_Panier(){
         return veritable_Panier;
+    }
+    public int getQ_totale_achat(){
+        return q_totale_achat;
     }
 
     @Override

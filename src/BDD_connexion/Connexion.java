@@ -320,6 +320,7 @@ public class Connexion {
             nbColonne = rsetMeta.getColumnCount();
             if(rset.next()){
                 u = new Utilisateurs();
+                u.setID(Integer.parseInt(rset.getString(1)));
                 u.setNom(rset.getString(2));
                 u.setPrenom(rset.getString(3));
                 u.setAge(Integer.parseInt(rset.getString(4)));
@@ -384,6 +385,7 @@ public class Connexion {
             while (rset.next()){
                 if(l.getIdentifiant()==Integer.parseInt(rset.getString(2))){
                     //verif = true;
+
                     int q = Integer.parseInt(rset.getString(3))-nb_sous;
                     if(q>=1){
                         requete = "UPDATE `panier` SET `quantite` = "+q+" WHERE (panier.id_client = "+u.getID()+" AND panier.id_livre = "+l.getIdentifiant()+");";
@@ -404,6 +406,66 @@ public class Connexion {
     public void viderPanier(Utilisateurs u) throws SQLException{
         String requete = "DELETE FROM panier where id_client = " + u.getID() + ";";
         stmt.executeUpdate(requete);
+    }
+
+    public void validerOperation(Utilisateurs u) throws SQLException{
+        String requete = "SELECT * FROM panier where id_client = " + u.getID() + ";";
+        rset = stmt.executeQuery(requete);
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+        int nbColonne = rsetMeta.getColumnCount();
+        System.out.println("Validation Opération");
+        while (rset.next()){
+            int id_l = Integer.parseInt(rset.getString(2));
+            int q = Integer.parseInt(rset.getString(3));
+            requete = "INSERT INTO `historique` (`identifiant`, `id_livre`, `id_client`, `quantite`) VALUES (NULL, "+id_l+","+u.getID()+","+q+");";
+            stmt.executeUpdate(requete);
+            //INSERT INTO `historique` (`identifiant`, `id_livre`, `id_client`, `quantite`) VALUES (NULL, '1', '2', '2');
+        }
+    }
+
+    public ArrayList remplirChampsRequete(String requete) throws SQLException {
+        // récupération de l'ordre de la requete
+        rset = stmt.executeQuery(requete);
+
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+
+        // calcul du nombre de colonnes du resultat
+        int nbColonne = rsetMeta.getColumnCount();
+
+        // creation d'une ArrayList de String
+        ArrayList<String> liste;
+        liste = new ArrayList<String>();
+
+        // tant qu'il reste une ligne
+        while (rset.next()) {
+            String s = new String();
+            for(int i=1;i<=nbColonne;i++){
+                s=s+rset.getString(i)+"   ";
+            }
+            System.out.println(s);
+            liste.add(s);
+        }
+
+        // Retourner l'ArrayList
+        return liste;
+    }
+
+    public void recherchePanier(Utilisateurs u)throws SQLException{
+        String requete = "SELECT * FROM panier where id_client = " + u.getID() + ";";
+        rset = stmt.executeQuery(requete);
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+        int nbColonne = rsetMeta.getColumnCount();
+        System.out.println("Récupération du panier existant ! ");
+        while(rset.next()){
+            Livre l1 = new Livre(Integer.parseInt(rset.getString(2)));
+            int quantite = Integer.parseInt(rset.getString(3));
+            u.getMonPanier().add(l1);
+            u.getL_nb_achats().add(quantite);
+            u.getVeritable_Panier().AjoutArticle(l1,quantite);
+        }
     }
 }
 
