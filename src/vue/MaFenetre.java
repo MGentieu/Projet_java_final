@@ -20,7 +20,7 @@ public class MaFenetre extends JFrame implements ActionListener
         setTitle ("BookLand");
         new Menu(this,u);
         // acceuil
-        JLabel labelTitre = Menu.accueil_page();
+        JPanel labelTitre = Menu.accueil_page();
         getContentPane().removeAll();
         getContentPane().add(labelTitre);
         getContentPane().revalidate();

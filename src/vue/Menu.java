@@ -40,6 +40,7 @@ public class Menu implements ActionListener {
     JPanel romantique;
     JPanel aventure;
     JPanel philosophique;
+    JPanel contact = new JPanel();
     JPanel panel;
     JPanel newPanier = new JPanel();
     JPanel compte = new JPanel();
@@ -108,7 +109,7 @@ public class Menu implements ActionListener {
         Accueil.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JLabel labelTitre = accueil_page();
+                JPanel labelTitre = accueil_page();
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(labelTitre);
                 frame.getContentPane().revalidate();
@@ -276,10 +277,7 @@ public class Menu implements ActionListener {
             frame.getContentPane().repaint();
         }
         else if (ev.getSource() == Co1 ) {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(compte);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
+            PageCompte pageCOMPTE=new PageCompte(u,frame,"Projet_Java/policier.jpg");
         }
         else if (ev.getSource() == A1 ) {
             JPanel AP = new JPanel();
@@ -289,14 +287,78 @@ public class Menu implements ActionListener {
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         }
+        else if(ev.getSource() == A2){
+            Contact PageContact = new Contact();
+            contact.add(PageContact);
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(contact);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
+        }
     }
 
-    public static JLabel accueil_page() {
+    /*public static JLabel accueil_page() {
         JLabel labelTitre = new JLabel("BookLand");
         labelTitre.setFont(new Font("Comic Sans MS", Font.BOLD, 100));
         labelTitre.setHorizontalAlignment(JLabel.CENTER);
         return labelTitre;
-    }
+    }*/
+    public static JPanel accueil_page() {
+        JPanel PanelAcueil = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(0, 0, 20, 0);
+
+        JLabel labelTitre = new JLabel("BOOKLAND");
+        labelTitre.setFont(new Font("Comic Sans MS", Font.BOLD, 100));
+        labelTitre.setForeground(new Color(204, 0, 0));
+        PanelAcueil.add(labelTitre, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(50, 0, 0, 0);
+        gbc.anchor = GridBagConstraints.NORTH;
+
+        JPanel Offre = new JPanel(new GridLayout(2, 2, 20, 20));
+
+        JPanel Offre1 = new JPanel(new GridLayout(2, 1));
+        JLabel LabelOffre1 = new JLabel("-30% si vous achetez 5 livres dans la catégorie Philosophique");
+        LabelOffre1.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        JButton Buttonoffre1 = new JButton("DECOUVRIR");
+        JPanel buttonPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel1.add(Buttonoffre1);
+        Offre1.add(LabelOffre1);
+        Offre1.add(buttonPanel1);
+
+        JPanel Offre2 = new JPanel(new GridLayout(2, 1));
+        JLabel LabelOffre2 = new JLabel("Pour 2 romans policier achetés, le 3ème est offert !!! ");
+        LabelOffre2.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        JButton Buttonoffre2 = new JButton("DECOUVRIR");
+        JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel2.add(Buttonoffre2);
+        Offre2.add(LabelOffre2);
+        Offre2.add(buttonPanel2);
+
+        JPanel Offre3 = new JPanel(new GridLayout(2, 1));
+        JLabel LabelOffre3 = new JLabel("-70% pour 6 Livres fantastiques achetés avant le 27 Avril 2023");
+        LabelOffre3.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        JButton Buttonoffre3 = new JButton("DECOUVRIR");
+        JPanel buttonPanel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel3.add(Buttonoffre3);
+        Offre3.add(LabelOffre3);
+        Offre3.add(buttonPanel3);
+
+        Offre.add(Offre1);
+        Offre.add(Offre2);
+        Offre.add(Offre3);
+
+        PanelAcueil.add(Offre, gbc);
+        PanelAcueil.setBackground(new Color(255, 255, 204));
+
+        return PanelAcueil;
+}
 
     private void create_panneau(String background_image, ArrayList<Livre> livres) {
         // Créer un nouveau panneau

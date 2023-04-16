@@ -125,6 +125,7 @@ public class Login extends JFrame {
                         MaFenetre Accueil = new MaFenetre(u);
                         Accueil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         Accueil.setResizable(false);
+                        setVisible(false);
                     }
                     conn.close();
                 } catch (SQLException | ClassNotFoundException e) {

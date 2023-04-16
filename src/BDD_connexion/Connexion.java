@@ -11,6 +11,8 @@ package BDD_connexion;
  */
 import java.sql.*;
 import java.util.ArrayList;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import modele.Livre;
 import modele.Utilisateurs;
 
@@ -334,6 +336,74 @@ public class Connexion {
 
 
 
+    }
+    public void ajouterPanier(Utilisateurs u, Livre l, int nb_achat) throws SQLException{
+        if(nb_achat<=0||nb_achat>l.getStock()){
+            System.out.println("On ne peut pas acheter un nombre négatif de livres !");
+        }
+        else {
+            int stk = l.getStock();
+            boolean verif_panier = false;
+            String requete = "SELECT * FROM panier where id_client = " + u.getID() + ";";
+            rset = stmt.executeQuery(requete);
+            // récupération du résultat de l'ordre
+            rsetMeta = rset.getMetaData();
+
+            // calcul du nombre de colonnes du resultat
+            int nbColonne = rsetMeta.getColumnCount();
+            boolean verif = false;
+            while (rset.next()){
+                if(l.getIdentifiant()==Integer.parseInt(rset.getString(2))){
+                    verif = true;
+                    int q = Integer.parseInt(rset.getString(3))+nb_achat;
+                    if(l.getStock()>=q){
+                        requete = "UPDATE `panier` SET `quantite` = "+q+" WHERE (panier.id_client = "+u.getID()+" AND panier.id_livre = "+l.getIdentifiant()+");";
+                        stmt.executeUpdate(requete);
+                        //UPDATE `panier` SET `quantite` = 2 WHERE (panier.id_client = 2 AND panier.id_livre = 2);
+                    }
+                    break;
+                }
+            }
+            if(!verif){
+                requete = "INSERT INTO `panier` (`identifiant`, `id_livre`, `quantite`, `id_client`) VALUES (NULL, '"+l.getIdentifiant()+"', '"+nb_achat+"', '"+u.getID()+"');";
+                stmt.executeUpdate(requete);
+            }
+        }
+    }
+
+    public void soustrairePanier(Utilisateurs u, Livre l, int nb_sous) throws SQLException{
+        if(nb_sous<=0){
+            System.out.println("Pas de soustraction par un nb_négatif !");
+        }
+        else {
+            String requete = "SELECT * FROM panier where id_client = " + u.getID() + ";";
+            rset = stmt.executeQuery(requete);
+            // récupération du résultat de l'ordre
+            rsetMeta = rset.getMetaData();
+            int nbColonne = rsetMeta.getColumnCount();
+            while (rset.next()){
+                if(l.getIdentifiant()==Integer.parseInt(rset.getString(2))){
+                    //verif = true;
+                    int q = Integer.parseInt(rset.getString(3))-nb_sous;
+                    if(q>=1){
+                        requete = "UPDATE `panier` SET `quantite` = "+q+" WHERE (panier.id_client = "+u.getID()+" AND panier.id_livre = "+l.getIdentifiant()+");";
+                        stmt.executeUpdate(requete);
+                        //UPDATE `panier` SET `quantite` = 2 WHERE (panier.id_client = 2 AND panier.id_livre = 2);
+                    }
+                    else{
+                        requete = "DELETE FROM `panier` WHERE (`panier`.`id_client` = "+u.getID()+" AND `panier`.`id_livre` = "+l.getIdentifiant()+");";
+                        stmt.executeUpdate(requete);
+                        //DELETE FROM `panier` WHERE `panier`.`identifiant` = 44
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    public void viderPanier(Utilisateurs u) throws SQLException{
+        String requete = "DELETE FROM panier where id_client = " + u.getID() + ";";
+        stmt.executeUpdate(requete);
     }
 }
 

@@ -1,10 +1,12 @@
 package PackagePaiement;
 
+import BDD_connexion.Connexion;
 import controleur.ValiderPaiementAction;
 import modele.Utilisateurs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class CarteBleu {
     private String numeroCarte;
@@ -21,6 +23,13 @@ public class CarteBleu {
         this.u=u;
         u.validerPanier();
         u.viderPanier();
+        try{
+            Connexion conn = new Connexion("ece_shopping","root","");
+            conn.viderPanier(u);
+            conn.close();
+        }catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         PagePaiement.setSize (500,500 );
         PagePaiement.setTitle ("Paiement");
 

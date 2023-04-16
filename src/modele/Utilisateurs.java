@@ -232,43 +232,38 @@ public class Utilisateurs {
         else{
             int stk = l.getStock();
             boolean verif_panier = false;
-            try{
-                Connexion conn = new Connexion("ece_shopping","root","");
-                /*String requete = "SELECT * FROM panier where id_client = "+getID()+";";
-                conn.setRset(conn.getStmt().executeQuery(requete));
+            //Connexion conn = new Connexion("ece_shopping","root","");
+            /*String requete = "SELECT * FROM panier where id_client = "+getID()+";";
+            conn.setRset(conn.getStmt().executeQuery(requete));
+            // récupération du résultat de l'ordre
+            conn.setRsetMeta(conn.getRset().getMetaData());
 
-                // récupération du résultat de l'ordre
-                conn.setRsetMeta(conn.getRset().getMetaData());
+            // calcul du nombre de colonnes du resultat
+            int nbColonne = conn.getRsetMeta().getColumnCount();
+            int i=0;*/
+            for(int i=0;i<monPanier.size();i++){
+                if(l.getIdentifiant() == monPanier.get(i).getIdentifiant()){
 
-                // calcul du nombre de colonnes du resultat
-                int nbColonne = conn.getRsetMeta().getColumnCount();
-                int i=0;*/
-                for(int i=0;i<monPanier.size();i++){
-                    if(l.getIdentifiant() == monPanier.get(i).getIdentifiant()){
-
-
-                        if(stk>=l_nb_achats.get(i)+nb_achat){
-                            l_nb_achats.set(i,l_nb_achats.get(i)+nb_achat);
-                            veritable_Panier.getMonpanier().get(i).setStock(veritable_Panier.getMonpanier().get(i).getStock()+nb_achat);
-                            String requete = "UPDATE `panier` SET `quantite` = '"+l_nb_achats.get(i)+"' WHERE (`panier`.`id_client` = "+getID()+" AND `panier`.`id_livre` = "+l.getIdentifiant()+";";
-                            conn.executeUpdate(requete);
-                        }
-                        verif_panier = true;
-                        break;
+                    if(stk>=l_nb_achats.get(i)+nb_achat){
+                        l_nb_achats.set(i,l_nb_achats.get(i)+nb_achat);
+                        veritable_Panier.getMonpanier().get(i).setStock(veritable_Panier.getMonpanier().get(i).getStock()+nb_achat);
+                        //String requete = "UPDATE `panier` SET `quantite` = '"+l_nb_achats.get(i)+"' WHERE (`panier`.`id_client` = "+getID()+" AND `panier`.`id_livre` = "+l.getIdentifiant()+";";
+                        //conn.executeUpdate(requete);
                     }
-                    i++;
+                    verif_panier = true;
+                    break;
                 }
-                if(!verif_panier){
-                    String requete = "INSERT INTO `panier` (`identifiant`, `id_livre`, `quantite`, `id_client`) VALUES (NULL, '"+l.getIdentifiant()+"', '"+nb_achat+"', '"+getID()+"');";
-                    conn.executeUpdate(requete);
-                    monPanier.add(l);
-                    l_nb_achats.add((Integer)nb_achat);
-                    veritable_Panier.AjoutArticle(l,nb_achat);
-                }
-                conn.close();
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
+
             }
+            if(!verif_panier){
+                //String requete = "INSERT INTO `panier` (`identifiant`, `id_livre`, `quantite`, `id_client`) VALUES (NULL, '"+l.getIdentifiant()+"', '"+nb_achat+"', '"+getID()+"');";
+                //conn.executeUpdate(requete);
+                monPanier.add(l);
+                l_nb_achats.add((Integer)nb_achat);
+                veritable_Panier.AjoutArticle(l,nb_achat);
+            }
+
+
 
         }
     }
@@ -316,7 +311,7 @@ public class Utilisateurs {
             for(int i=0;i<veritable_Panier.getMonpanier().size();i++){
                 if(l.getIdentifiant() == monPanier.get(i).getIdentifiant()){
 
-                    if(l_nb_achats.get(i)-nb_sous>=0){
+                    if(l_nb_achats.get(i)-nb_sous>=1){
                         l_nb_achats.set(i,l_nb_achats.get(i)-nb_sous);
                         veritable_Panier.getMonpanier().get(i).setStock(veritable_Panier.getMonpanier().get(i).getStock()-nb_sous);
                     }
@@ -339,7 +334,7 @@ public class Utilisateurs {
 
             // calcul du nombre de colonnes du resultat
             int nbColonne = conn.getRsetMeta().getColumnCount();
-            int i=0;
+
             while(conn.getRset().next()){
 
                 Livre l1 = new Livre(Integer.parseInt(conn.getRset().getString(2)));

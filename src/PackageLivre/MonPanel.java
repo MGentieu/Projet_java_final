@@ -1,4 +1,5 @@
 package PackageLivre;
+import BDD_connexion.Connexion;
 import modele.Livre;
 import modele.Utilisateurs;
 
@@ -6,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MonPanel extends JPanel implements ActionListener {
@@ -100,12 +102,18 @@ public class MonPanel extends JPanel implements ActionListener {
             if (ev.getSource() == boutonAcheter1.get(i)) {
                 System.out.println("AEAEHFNCHV");
                 u.ajouterPanier(liste_l.get(i),1);
-
+                try{
+                    Connexion conn = new Connexion("ece_shopping","root","");
+                    conn.ajouterPanier(u,liste_l.get(i),1);
+                    conn.close();
+                }catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
         for(int j=0;j<u.getMonPanier().size();j++){
             System.out.println(u.getMonPanier().get(j).toString()+"\n"+u.getL_nb_achats().get(j)+"   "
-                    +u.getVeritable_Panier().getMonpanier().get(j).getStock());
+                    +u.getVeritable_Panier().getMonpanier().get(j).getStock()+"   "+u.getMonPanier().get(j).getIdentifiant());
         }
     }
 
