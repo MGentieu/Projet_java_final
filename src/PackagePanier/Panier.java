@@ -62,40 +62,50 @@ public class Panier  {
         TotalPanier=0;
         int offre_philo=0;
         boolean verif1 = true;
+        int sum_rabais_philo = 0;
 
         int offre_policier=0;
         int sum_rabais_police = 0;
 
         int offre_fanta=0;
         boolean verif2 = true;
+        int sum_rabais_fanta = 0;
 
         for(int i=0;i<taillePanier;i++){
-            int prix=0;
+            int prix=(int)u.getVeritable_Panier().monpanier.get(i).getPrix()*u.getL_nb_achats().get(i);
+            System.out.println(u.getMonPanier().get(i).getType());
+            System.out.println(u.getMonPanier().get(i).getType().equals("Policier"));
+            System.out.println(taillePanier);
             if(u.getMonPanier().get(i).getType()=="Policier"){
+
                 offre_policier+=u.getL_nb_achats().get(i);
-                prix = (int)u.getVeritable_Panier().monpanier.get(i).getPrix()*u.getL_nb_achats().get(i);
+                //prix = (int)u.getVeritable_Panier().monpanier.get(i).getPrix()*u.getL_nb_achats().get(i);
             }
-            else if(u.getMonPanier().get(i).getType()=="Science-Fiction"){
+            else if(u.getMonPanier().get(i).getType().equals("Science-Fiction")){
+                //System.out.println(u.getMonPanier().get(i).getType().equals("Science-Fiction"));
                 offre_fanta+=u.getL_nb_achats().get(i);
-                prix = (int)u.getVeritable_Panier().monpanier.get(i).getPrix()*u.getL_nb_achats().get(i);
-                if(offre_fanta>=6 && verif2){
+                //prix = (int)u.getVeritable_Panier().monpanier.get(i).getPrix()*u.getL_nb_achats().get(i);
+                /*if(offre_fanta>=6 && verif2){
                     verif2 = false;
                     prix = (int)(prix*0.3);
-                }
+                }*/
             }
-            else if(u.getMonPanier().get(i).getType()=="Philosophique"){
+            else if(u.getMonPanier().get(i).getType().equals("Philosophique")){
+                //System.out.println(u.getMonPanier().get(i).getType()=="Philosophique");
                 offre_philo+=u.getL_nb_achats().get(i);
-                prix = (int)u.getVeritable_Panier().monpanier.get(i).getPrix()*u.getL_nb_achats().get(i);
-                if(offre_philo>=5 && verif1){
+                //prix = (int)u.getVeritable_Panier().monpanier.get(i).getPrix()*u.getL_nb_achats().get(i);
+                /*if(offre_philo>=5 && verif1){
                     verif1 = false;
                     prix = (int)(prix*0.7);
-                }
+                }*/
             }
 
             TotalPanier = TotalPanier + prix;
         }
         sum_rabais_police = (int)(offre_policier/3);
-        TotalPanier = TotalPanier - sum_rabais_police * 9;
+        sum_rabais_fanta = (int)(offre_fanta/6);
+        sum_rabais_philo = (int)(offre_philo/5);
+        TotalPanier = TotalPanier - sum_rabais_police * 9 - sum_rabais_fanta*((int)(0.7*9)) - sum_rabais_philo*((int)(0.3*9));
         //TotalPanier = 20;
         int y=1;
         do {

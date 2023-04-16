@@ -196,7 +196,7 @@ public class Connexion {
         }
     }
 
-    public ArrayList remplirChampsRequete_livres(String requete) throws SQLException {
+    public ArrayList remplirChampsRequete_livres(String requete, String type) throws SQLException {
         // récupération de l'ordre de la requete
         rset = stmt.executeQuery(requete);
 
@@ -219,7 +219,7 @@ public class Connexion {
             l.setDescription(rset.getString(3));
             l.setEditeur(rset.getString(5));
             l.setAuteur(rset.getString(6));
-            l.setType(rset.getString(7));
+            l.setType(type);
             l.setStock(Integer.parseInt(rset.getString(8)));
             l.setPrix(Double.parseDouble(rset.getString(9)));
 
@@ -231,7 +231,7 @@ public class Connexion {
 
     public ArrayList recherche_par_categorie(String categorie) throws SQLException{
         String requete = "SELECT * FROM livre WHERE categorie = '"+categorie+"';";
-        return remplirChampsRequete_livres(requete);
+        return remplirChampsRequete_livres(requete, categorie);
     }
     public ArrayList remplirChampsRequete_clients(String requete) throws SQLException {
         // récupération de l'ordre de la requete
