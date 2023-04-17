@@ -1,10 +1,12 @@
 package PackagePaiement;
 
+import BDD_connexion.Connexion;
 import controleur.ValiderPaiementAction;
 import modele.Utilisateurs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class Paypal {
 
@@ -15,8 +17,18 @@ public class Paypal {
     public Paypal(JFrame PagePaiement,String nomType, Utilisateurs u)
     {
         this.u = u;
+        //conn.validerOperation(u);
         u.validerPanier();
         u.viderPanier();
+        try{
+            Connexion conn = new Connexion("ece_shopping","root","");
+            //conn.validerOperation(u);
+            conn.viderPanier(u);
+
+            conn.close();
+        }catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         PagePaiement.setSize (500,500 );
         PagePaiement.setTitle ("Paiement");
 

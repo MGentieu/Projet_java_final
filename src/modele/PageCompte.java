@@ -14,15 +14,15 @@ import java.util.ArrayList;
 
 public class PageCompte {
 
-    Utilisateurs u;
-    JPanel panel;
-    JFrame frame;
-    String background_image;
-    JButton H;
-    JButton D;
-    JButton A;
-    JButton S;
-    JButton M;
+    private Utilisateurs u;
+    private JPanel panel;
+    private JFrame frame;
+    private String background_image;
+    private JButton H;
+    private JButton D;
+    private JButton A;
+    private JButton S;
+    private JButton M;
     public PageCompte(Utilisateurs u,JFrame frame,String background_image) {
         this.u = u;
         this.frame=frame;
