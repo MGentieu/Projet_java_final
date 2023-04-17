@@ -184,10 +184,11 @@ public class Menu implements ActionListener {
                 // recupération des livre dans la BDD
                 Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> policiers = conn.recherche_par_categorie("Policier");
-                this.create_panneau("Projet_Java/policier.jpg", policiers);
                 for(int i=0;i<policiers.size();i++){
-                    policiers.get(i).setImage("categorie.png");
+                    policiers.get(i).setImage("C:\\Users\\33695\\IdeaProjects\\Projet_Java_12_04\\Projet_Java\\categorie.png");
                 }
+                this.create_panneau("policiers3.jpg", policiers);
+
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -198,7 +199,10 @@ public class Menu implements ActionListener {
                 // recupération des livre dans la BDD
                 Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> sciencef = conn.recherche_par_categorie("Science-Fiction");
-                this.create_panneau("Projet_Java/policier.jpg", sciencef);
+                for(int i=0;i<sciencef.size();i++){
+                    sciencef.get(i).setImage("C:\\Users\\33695\\IdeaProjects\\Projet_Java_12_04\\Projet_Java\\categorie.png");
+                }
+                this.create_panneau("SF2.jpg", sciencef);
 
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
@@ -211,7 +215,11 @@ public class Menu implements ActionListener {
                 // recupération des livre dans la BDD
                 Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> romantiques = conn.recherche_par_categorie("Romantique");
-                this.create_panneau("Projet_Java/policier.jpg", romantiques);
+                for(int i=0;i<romantiques.size();i++){
+                    romantiques.get(i).setImage("C:\\Users\\33695\\IdeaProjects\\Projet_Java_12_04\\Projet_Java\\categorie.png");
+                }
+                this.create_panneau("love.jpg", romantiques);
+
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -223,7 +231,11 @@ public class Menu implements ActionListener {
                 // recupération des livre dans la BDD
                 Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> theatrales = conn.recherche_par_categorie("Theatrale");
-                this.create_panneau("Projet_Java/policier.jpg", theatrales);
+                for(int i=0;i<theatrales.size();i++){
+                    theatrales.get(i).setImage("C:\\Users\\33695\\IdeaProjects\\Projet_Java_12_04\\Projet_Java\\categorie.png");
+                }
+                this.create_panneau("theatrale2.jpg", theatrales);
+
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -235,7 +247,11 @@ public class Menu implements ActionListener {
                 // recupération des livre dans la BDD
                 Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> aventures = conn.recherche_par_categorie("Aventure");
-                this.create_panneau("Projet_Java/policier.jpg", aventures);
+                for(int i=0;i<aventures.size();i++){
+                    aventures.get(i).setImage("C:\\Users\\33695\\IdeaProjects\\Projet_Java_12_04\\Projet_Java\\categorie.png");
+                }
+                this.create_panneau("aventure2.jpg", aventures);
+
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -247,7 +263,11 @@ public class Menu implements ActionListener {
                 // recupération des livre dans la BDD
                 Connexion conn = new Connexion("ece_shopping","root","");
                 ArrayList<Livre> philo = conn.recherche_par_categorie("Philosophique");
-                this.create_panneau("Projet_Java/policier.jpg", philo);
+                for(int i=0;i<philo.size();i++){
+                    philo.get(i).setImage("C:\\Users\\33695\\IdeaProjects\\Projet_Java_12_04\\Projet_Java\\categorie.png");
+                }
+                this.create_panneau("philo2.jpg", philo);
+
                 conn.close();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -268,10 +288,10 @@ public class Menu implements ActionListener {
             System.out.println(u.getMonPanier().get(0).toString()+"\n"+u.getL_nb_achats().get(0)+"   "
                     +u.getVeritable_Panier().getMonpanier().get(0).getStock());
             System.out.println(l1.toString());*/
-            PackagePanier.Panier p1=new Panier(u,frame,"Projet_Java/policier.jpg");
+            PackagePanier.Panier p1=new Panier(u,frame,"bibliotheque.jpg");
         }
         else if (ev.getSource() == Co1 ) {
-            PageCompte pageCOMPTE=new PageCompte(u,frame,"Projet_Java/policier.jpg");
+            PageCompte pageCOMPTE=new PageCompte(u,frame,"compte.jpg");
         }
         else if (ev.getSource() == A1 ) {
             JPanel AP = new JPanel();
